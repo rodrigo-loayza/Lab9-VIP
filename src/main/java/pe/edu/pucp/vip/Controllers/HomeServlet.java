@@ -1,19 +1,22 @@
 package pe.edu.pucp.vip.Controllers;
 
-import java.io.*;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.IOException;
 
-@WebServlet(name = "HomeServlet", value = "/")
-public class HomeServlet extends HttpServlet{
+@WebServlet(name = "HomeServlet", value = "")
+public class HomeServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //Vista
-
-
+        RequestDispatcher view;
+        view = request.getRequestDispatcher("index.jsp");
+        view.forward(request, response);
     }
 
-    public void destroy() {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }
