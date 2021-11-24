@@ -28,7 +28,7 @@
 <!--Espacio-->
 <body>
 <section
-        class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
+        class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100 alumno-bg"
         style="min-height: 700px;">
     <div class="container d-flex justify-content-center">
         <div class="card text-white bg-dark mb-3 border-0 responsive-form">

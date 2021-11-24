@@ -5,6 +5,35 @@
     background-size: cover
 }
 
+.universidad-bg {
+    background-image: url("../img/universidad-bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover
+}
+
+.alumno-bg {
+    background-image: url("../img/alumno-bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover
+}
+
+.participante-bg {
+    background-image: url("../img/participante-bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover
+}
+
+
+.pais-bg {
+    background-image: url("../img/pais-bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover
+}
+
 .masthead {
     padding-top: 10.5rem;
     padding-bottom: 6rem;
