@@ -9,6 +9,7 @@
     String alerta = request.getParameter("alerta");
     int limit = request.getParameter("limit")==null? 0 : Integer.parseInt(request.getParameter("limit"));
     String direccionBasePag= request.getContextPath() + "/universidades?columna="+columna+"&limit="+limit+"&orden="+orden;
+    //para simplificar
 %>
 
 

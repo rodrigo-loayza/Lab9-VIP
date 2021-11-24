@@ -40,10 +40,14 @@ public class UniversidadServlet extends HttpServlet {
 
                 ArrayList<BUniversidad> listaUniversidades = new ArrayList<>();
                 int paginas = 0;
+                int max= limit*pag;
+                if(max>total){
+                    max=total;
+                }
                 if (limit != 0) {
                     int inicial=((pag - 1) * limit);
                     paginas = (total % limit) == 0 ? total / limit : (total / limit) + 1;
-                    for (int i = inicial; i < (limit*pag); i++) {
+                    for (int i = inicial; i < max; i++) {
                         listaUniversidades.add(listaUni.get(i));
 
                     }
