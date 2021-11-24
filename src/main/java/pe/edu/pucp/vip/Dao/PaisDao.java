@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class PaisDAO extends BaseDAO {
+public class PaisDao extends BaseDao {
 
     public ArrayList<BPais> listarPaises(String id) {
         ArrayList<BPais> listaPaises = new ArrayList<>();

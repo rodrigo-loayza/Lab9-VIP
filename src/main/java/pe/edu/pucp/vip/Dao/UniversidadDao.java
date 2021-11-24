@@ -5,7 +5,7 @@ import pe.edu.pucp.vip.Bean.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UniversidadDAO extends BaseDAO {
+public class UniversidadDao extends BaseDao {
     public ArrayList<BUniversidad> listarUniversidades(String columna, String orden) {
 
         ArrayList<BUniversidad> listaUniversidades = new ArrayList<>();

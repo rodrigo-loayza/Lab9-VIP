@@ -9,6 +9,14 @@ public class BParticipante {
     private String genero;
     private BPais pais;
 
+    public BParticipante(String nombre, String apellido, int edad, String genero, BPais pais) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.genero = genero;
+        this.pais = pais;
+    }
+
     public BParticipante(int idParticipante, String nombre, String apellido, int edad, String genero, BPais pais) {
         this.idParticipante = idParticipante;
         this.nombre = nombre;

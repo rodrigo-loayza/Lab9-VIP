@@ -4,8 +4,8 @@ import pe.edu.pucp.vip.Bean.BAlumno;
 import pe.edu.pucp.vip.Bean.BPais;
 import pe.edu.pucp.vip.Bean.BParticipante;
 import pe.edu.pucp.vip.Bean.BUniversidad;
-import pe.edu.pucp.vip.Dao.PaisDAO;
-import pe.edu.pucp.vip.Dao.UniversidadDAO;
+import pe.edu.pucp.vip.Dao.PaisDao;
+import pe.edu.pucp.vip.Dao.UniversidadDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class UniversidadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UniversidadDAO universidadDAO = new UniversidadDAO();
-        PaisDAO paisDAO = new PaisDAO();
+        UniversidadDao universidadDAO = new UniversidadDao();
+        PaisDao paisDAO = new PaisDao();
         String action = request.getParameter("action")==null? "listarUniversidades" : request.getParameter("action");
         RequestDispatcher view;
         ArrayList<BPais> listaPaises;
@@ -104,7 +104,7 @@ public class UniversidadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UniversidadDAO universidadDAO = new UniversidadDAO();
+        UniversidadDao universidadDAO = new UniversidadDao();
         switch (request.getParameter("action")) {
             case "registrarUniversidad":
                 try{
