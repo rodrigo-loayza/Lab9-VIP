@@ -9,13 +9,22 @@ public class UniversidadDao extends BaseDao {
     public ArrayList<BUniversidad> listarUniversidades(String columna, String orden) {
 
         ArrayList<BUniversidad> listaUniversidades = new ArrayList<>();
+        String sql = "";
+
+        if (columna.equals("u.ranking") || columna.equals("u.numAlumnos")) {
+            sql = "select u.idUniversidad ,u.nombre, u.ranking, u.numAlumnos, u.urlFoto, p.idPais, p.nombre, p.idContinente " +
+                    "from universidad u " +
+                    "inner join pais p on u.idPais = p.idPais " +
+                    "order by " + columna + " " + orden + ";";
+        } else{
+            sql = "select u.idUniversidad ,u.nombre, u.ranking, u.numAlumnos, u.urlFoto, p.idPais, p.nombre, p.idContinente " +
+                    "from universidad u " +
+                    "inner join pais p on u.idPais = p.idPais " +
+                    "order by " + columna + " collate utf8_bin collate utf8_unicode_ci " + orden + ";";
+        }
 
         try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(
-                     "select u.idUniversidad ,u.nombre, u.ranking, u.numAlumnos, u.urlFoto, p.idPais, p.nombre, p.idContinente " +
-                             "from universidad u " +
-                             "inner join pais p on u.idPais = p.idPais " +
-                             "order by " + columna + " " + orden + ";")) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             try (ResultSet rs = pstmt.executeQuery();) {
 
@@ -217,18 +226,14 @@ public class UniversidadDao extends BaseDao {
     public void eliminarAlumnosDeUniversidad(int idUniversidad) throws Exception {
         String sql = "delete from alumno where idUniversidad=?;";
 
-        try(
+        try (
                 Connection conn = this.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);)
-
-        {
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idUniversidad);
             pstmt.executeUpdate();
 
-        } catch(
-                SQLException e)
-
-        {
+        } catch (
+                SQLException e) {
             e.printStackTrace();
             throw e;
         }
@@ -238,18 +243,14 @@ public class UniversidadDao extends BaseDao {
     public void eliminarUniversidad(int idUniversidad) throws Exception {
         String sql = "delete from universidad where idUniversidad=?";
 
-        try(
-        Connection conn = this.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql);)
-
-        {
+        try (
+                Connection conn = this.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idUniversidad);
             pstmt.executeUpdate();
 
-        } catch(
-        SQLException e)
-
-        {
+        } catch (
+                SQLException e) {
             e.printStackTrace();
             throw e;
         }
@@ -260,14 +261,12 @@ public class UniversidadDao extends BaseDao {
         String sql = "delete from pais where idPais = " +
                 "(select * from (select p.idPais from pais p \n" +
                 "where p.idPais not in (select idPais from universidad) and p.idPais=?) as p);";
-        try(
+        try (
                 Connection conn = this.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);)
-        {
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idPais);
             pstmt.executeUpdate();
-        } catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
@@ -277,20 +276,18 @@ public class UniversidadDao extends BaseDao {
         String sql = "delete from participante where idPais = " +
                 "(select * from (select p.idPais from pais p " +
                 "where p.idPais not in (select idPais from universidad) and p.idPais=?) as p);";
-        try(
+        try (
                 Connection conn = this.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);)
-        {
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idPais);
             pstmt.executeUpdate();
-        } catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
     }
 
-    public void registrarAlumno(BAlumno alumno) throws Exception{
+    public void registrarAlumno(BAlumno alumno) throws Exception {
 
         String sql = "insert into alumno (idParticipante, idUniversidad, codigo, promedio, condicion) " +
                 "values(?,?,?,?,0);";
@@ -310,7 +307,7 @@ public class UniversidadDao extends BaseDao {
         }
     }
 
-    public void editarAlumno(BAlumno alumno) throws Exception{
+    public void editarAlumno(BAlumno alumno) throws Exception {
         String sql = "update alumno set codigo =?, promedio =? " +
                 "where idUniversidad = ? and idParticipante = ? ;";
 
@@ -332,16 +329,14 @@ public class UniversidadDao extends BaseDao {
     public void eliminarAlumno(int idParticipante) throws Exception {
         String sql = "update alumno set condicion=1 where idParticipante=?;";
 
-        try(
+        try (
                 Connection conn = this.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);)
-        {
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idParticipante);
             pstmt.executeUpdate();
 
-        } catch(
-                SQLException e)
-        {
+        } catch (
+                SQLException e) {
             e.printStackTrace();
             throw e;
         }
@@ -351,16 +346,14 @@ public class UniversidadDao extends BaseDao {
     public void borrarAlumno(int idParticipante) throws Exception {
         String sql = "delete from alumno where condicion=1 and idParticipante=?;";
 
-        try(
+        try (
                 Connection conn = this.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);)
-        {
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idParticipante);
             pstmt.executeUpdate();
 
-        } catch(
-                SQLException e)
-        {
+        } catch (
+                SQLException e) {
             e.printStackTrace();
             throw e;
         }

@@ -13,11 +13,22 @@ public class ParticipanteDao extends BaseDao {
 
         ArrayList<BParticipante> listaParticipantes = new ArrayList<>();
 
-        String sql = "select p.idParticipante,p.nombre,p.apellido,p.edad,p.genero,p2.idPais, p2.nombre \n" +
-                "from participante p \n" +
-                "inner join pais p2 on p.idPais = p2.idPais \n" +
-                "where lower(concat(p.nombre, ' ', p.apellido)) like ? \n" +
-                "order by " + columna + " " + order;
+        String sql = "";
+
+
+        if (columna.equals("p.edad")) {
+            sql = "select p.idParticipante,p.nombre,p.apellido,p.edad,p.genero,p2.idPais, p2.nombre \n" +
+                    "from participante p \n" +
+                    "inner join pais p2 on p.idPais = p2.idPais \n" +
+                    "where lower(concat(p.nombre, ' ', p.apellido)) like ? \n" +
+                    "order by " + columna + "  " + order;
+        } else {
+            sql = "select p.idParticipante,p.nombre,p.apellido,p.edad,p.genero,p2.idPais, p2.nombre \n" +
+                    "from participante p \n" +
+                    "inner join pais p2 on p.idPais = p2.idPais \n" +
+                    "where lower(concat(p.nombre, ' ', p.apellido)) like ? \n" +
+                    "order by " + columna + " collate utf8_bin collate utf8_unicode_ci  " + order;
+        }
         if (limit != -1) {
             sql = sql + " limit " + limit;
         }
@@ -227,7 +238,7 @@ public class ParticipanteDao extends BaseDao {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                lista.put(rs.getString(1),rs.getInt(2));
+                lista.put(rs.getString(1), rs.getInt(2));
             }
 
         } catch (SQLException e) {

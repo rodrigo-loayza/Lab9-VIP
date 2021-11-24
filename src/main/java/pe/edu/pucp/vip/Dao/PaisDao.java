@@ -15,16 +15,27 @@ public class PaisDao extends BaseDao {
     public ArrayList<BPais> listarPaises(int limit, int busqueda, String columna, String orden) {
 
         ArrayList<BPais> listaPaises = new ArrayList<>();
-
-        String sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                "inner join continente c on p.idContinente = c.idContinente\n" +
-                "where p.idContinente = ? \n" +
-                "order by " + columna + " \n" + orden;
-
-        if (busqueda == 0) {
+        String sql = "";
+        if (columna.equals("p.nombre") || columna.equals("c.nombre")) {
             sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
                     "inner join continente c on p.idContinente = c.idContinente\n" +
-                    "order by " + columna + " \n" + orden;
+                    "where p.idContinente = ? \n" +
+                    "order by " + columna + "\n" + "collate utf8_bin collate utf8_unicode_ci " + orden;
+            if (busqueda == 0) {
+                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+                        "inner join continente c on p.idContinente = c.idContinente\n" +
+                        "order by " + columna + "\n" + "collate utf8_bin collate utf8_unicode_ci " + orden;
+            }
+        } else {
+            sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+                    "inner join continente c on p.idContinente = c.idContinente\n" +
+                    "where p.idContinente = ? \n" +
+                    "order by " + columna + "\n" + orden;
+            if (busqueda == 0) {
+                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+                        "inner join continente c on p.idContinente = c.idContinente\n" +
+                        "order by " + columna + "\n" + orden;
+            }
         }
 
         if (limit != -1) {
