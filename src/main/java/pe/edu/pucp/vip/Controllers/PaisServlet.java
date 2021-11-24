@@ -2,6 +2,7 @@ package pe.edu.pucp.vip.Controllers;
 
 import pe.edu.pucp.vip.Bean.BContinente;
 import pe.edu.pucp.vip.Bean.BPais;
+import pe.edu.pucp.vip.Bean.BUniversidad;
 import pe.edu.pucp.vip.Dao.PaisDao;
 import pe.edu.pucp.vip.Dao.PaisDao;
 
@@ -15,39 +16,48 @@ import java.util.ArrayList;
 public class PaisServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PaisDao paisDAO = new PaisDao();
-        ArrayList<BPais> listaPaises = new ArrayList<>();
+        PaisDao paisDao = new PaisDao();
         RequestDispatcher view;
         String action = request.getParameter("action") == null ? "buscar" : request.getParameter("action");
 
         switch (action) {
             case "buscar":
-                String busqueda = request.getParameter("id") == null ? "0" : request.getParameter("id");
+                int busqueda = request.getParameter("busqueda") == null ? 0 : Integer.parseInt(request.getParameter("busqueda"));
+                request.setAttribute("busqueda", busqueda);
                 String mensaje = request.getParameter("mensaje") == null ? "0" : request.getParameter("mensaje");
-                String orden = request.getParameter("orden") == null ? "na" : request.getParameter("orden");
-                int limit = request.getParameter("limit") == null ? 0 : Integer.parseInt(request.getParameter("limit"));
-                int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
-                request.setAttribute("limit", limit);
+                String columna = request.getParameter("columna") == null ? "p.nombre" : request.getParameter("columna");
+                request.setAttribute("columna", columna);
+                String orden = request.getParameter("orden") == null ? "asc" : request.getParameter("orden");
                 request.setAttribute("orden", orden);
-                request.setAttribute("idcontinente", busqueda);
+                int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+                request.setAttribute("limit", limit);
+                int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
 
-                if (limit == 0) {
-                    request.setAttribute("pag", pag);
-                    listaPaises = paisDAO.listarPaises(busqueda + orden);
-                    request.setAttribute("paginas", 0);
-                } else {
-                    listaPaises = paisDAO.listarPaises(busqueda + orden, pag, limit);
-                    int total = paisDAO.contarPaises(busqueda);
-                    int paginas = total / limit;
-                    if (total % limit != 0) {
-                        paginas++;
+                ArrayList<BPais> listaPa = paisDao.listarPaises(-1, busqueda, columna, orden);
+                int total = listaPa.size();
+
+                ArrayList<BPais> listaPaises = new ArrayList<>();
+                limit = limit == -1 ? 0 : limit;
+                int paginas = 0;
+                int max = limit * pag;
+                if (max > total) {
+                    max = total;
+                }
+                if (limit != 0) {
+                    int inicial = ((pag - 1) * limit);
+                    paginas = (total % limit) == 0 ? total / limit : (total / limit) + 1;
+                    for (int i = inicial; i < max; i++) {
+                        listaPaises.add(listaPa.get(i));
+
                     }
-                    request.setAttribute("paginas", paginas);
-                    request.setAttribute("pag", pag);
-
+                } else {
+                    listaPaises = listaPa;
                 }
 
                 request.setAttribute("listaPaises", listaPaises);
+                request.setAttribute("pag", pag);
+                request.setAttribute("paginas", paginas);
+
                 request.setAttribute("mensaje", mensaje);
                 request.setAttribute("E", request.getParameter("E"));
 
@@ -62,7 +72,7 @@ public class PaisServlet extends HttpServlet {
                 view.forward(request, response);
                 break;
             case "editar":
-                BPais pais = paisDAO.buscarPais(request.getParameter("id"));
+                BPais pais = paisDao.buscarPais(request.getParameter("id"));
                 request.setAttribute("pais", pais);
                 view = request.getRequestDispatcher("paises/editarPais.jsp");
                 view.forward(request, response);
@@ -72,7 +82,7 @@ public class PaisServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PaisDao paisDAO = new PaisDao();
+        PaisDao paisDao = new PaisDao();
         ArrayList<BPais> listaPaises = new ArrayList<>();
         RequestDispatcher view;
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
@@ -83,13 +93,14 @@ public class PaisServlet extends HttpServlet {
         int limite;
         switch (action) {
             case "buscar":
-                id = request.getParameter("idcontinente") == null ? "" : request.getParameter("idcontinente");
-                limit = request.getParameter("limitb") == null? "0" : request.getParameter("limitb");
-                if (id.equals("0")) {
-                    response.sendRedirect(request.getContextPath() + "/paises?limit="+limit);
-                } else {
-                    response.sendRedirect(request.getContextPath() + "/paises?action=buscar&id=" + id+"&limit="+limit);
-                }
+                id = request.getParameter("idcontinente") == null ? "0" : request.getParameter("idcontinente");
+                limit = request.getParameter("limitb") == null ? "0" : request.getParameter("limitb");
+                String columna = request.getParameter("columna") == null ? "p.nombe" : request.getParameter("columna");
+//                if (id.equals("0")) {
+//                    response.sendRedirect(request.getContextPath() + "/paises?limit=" + limit);
+//                } else {
+                response.sendRedirect(request.getContextPath() + "/paises?action=buscar&busqueda=" + id + "&limit=" + limit + "&columna=" + columna);
+//                }
                 break;
             case "eliminar":
 
@@ -101,7 +112,7 @@ public class PaisServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/paises?&orden=" + orden + "&id=" + busqueda);
                 } else {
                     try {
-                        paisDAO.borrarPais(Integer.parseInt(id));
+                        paisDao.borrarPais(Integer.parseInt(id));
 
                         if (busqueda.equals("0") || busqueda.isEmpty()) {
                             response.sendRedirect(request.getContextPath() + "/paises?orden=" + orden + "&limit=" + limite + "&E=1&mensaje=1");
@@ -127,7 +138,7 @@ public class PaisServlet extends HttpServlet {
                 BPais pais = new BPais(0, nombre, poblacion, tamano, continente);
 
                 try {
-                    paisDAO.insertarPais(pais);
+                    paisDao.insertarPais(pais);
                     response.sendRedirect(request.getContextPath() + "/paises?" + "E=1&mensaje=2");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,7 +155,7 @@ public class PaisServlet extends HttpServlet {
                 BPais paisE = new BPais(idpais, nombreE, poblacionE, tamanoE, continenteE);
 
                 try {
-                    paisDAO.actualizarPais(paisE);
+                    paisDao.actualizarPais(paisE);
                     response.sendRedirect(request.getContextPath() + "/paises?" + "E=1&mensaje=3");
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -40,12 +40,12 @@ public class UniversidadServlet extends HttpServlet {
 
                 ArrayList<BUniversidad> listaUniversidades = new ArrayList<>();
                 int paginas = 0;
-                int max= limit*pag;
-                if(max>total){
-                    max=total;
+                int max = limit * pag;
+                if (max > total) {
+                    max = total;
                 }
                 if (limit != 0) {
-                    int inicial=((pag - 1) * limit);
+                    int inicial = ((pag - 1) * limit);
                     paginas = (total % limit) == 0 ? total / limit : (total / limit) + 1;
                     for (int i = inicial; i < max; i++) {
                         listaUniversidades.add(listaUni.get(i));
@@ -77,7 +77,7 @@ public class UniversidadServlet extends HttpServlet {
                 }
                 break;
             case ("registrarUniversidad"):
-                listaPaises = paisDAO.listarPaises("");
+                listaPaises = paisDAO.listarPaises(-1, 0, "p.nombre", "asc");
                 request.setAttribute("listaPaises", listaPaises);
                 view = request.getRequestDispatcher("/universidad/registrarUniversidad.jsp");
                 view.forward(request, response);
@@ -86,7 +86,7 @@ public class UniversidadServlet extends HttpServlet {
                 try {
                     int idUniversidad = Integer.parseInt(request.getParameter("idUniversidad"));
                     BUniversidad universidadEdit = universidadDAO.obtenerUniversidad(idUniversidad);
-                    listaPaises = paisDAO.listarPaises("");
+                    listaPaises = paisDAO.listarPaises(-1, 0, "p.nombre", "asc");
                     request.setAttribute("listaPaises", listaPaises);
                     request.setAttribute("universidad", universidadEdit);
                     view = request.getRequestDispatcher("/universidad/editarUniversidad.jsp");

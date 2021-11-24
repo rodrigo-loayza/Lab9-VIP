@@ -303,7 +303,7 @@
                         </div>
                         <!--Estadísticas-->
                         <div class="row justify-content-around">
-                            <!--Género-->
+                            <!--Género y stats-->
                             <div class="col-xl-4 px-0">
                                 <div class="row">
                                     <div class="card shadow mb-3 px-0">
@@ -360,47 +360,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--Cards-->
-                            <%--                            <div class="col-xl-12 col-md-12">--%>
-                            <%--                                <div class="d-flex flex-column justify-content-between h-100">--%>
-                            <%--                                    <!--Edad promedio-->--%>
-                            <%--                                    <div class="card border-left-card shadow py-2 my-auto">--%>
-                            <%--                                        <div class="card-body">--%>
-                            <%--                                            <div class="row no-gutters align-items-center">--%>
-                            <%--                                                <div class="col mr-2">--%>
-                            <%--                                                    <div class="fs-6 font-weight-bold text-warning mb-1">--%>
-                            <%--                                                        Edad promedio--%>
-                            <%--                                                    </div>--%>
-                            <%--                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">--%>
-                            <%--                                                        <%=edadPromedio%>--%>
-                            <%--                                                    </div>--%>
-                            <%--                                                </div>--%>
-                            <%--                                                <div class="col-auto">--%>
-                            <%--                                                    <i class="fas fa-user fa-2x text-gray-300"></i>--%>
-                            <%--                                                </div>--%>
-                            <%--                                            </div>--%>
-                            <%--                                        </div>--%>
-                            <%--                                    </div>--%>
-                            <%--                                    <!--País con más participantes-->--%>
-                            <%--                                    <div class="card border-left-card shadow py-2 my-auto">--%>
-                            <%--                                        <div class="card-body">--%>
-                            <%--                                            <div class="row no-gutters align-items-center">--%>
-                            <%--                                                <div class="col mr-2">--%>
-                            <%--                                                    <div class="fs-6 font-weight-bold text-warning mb-1">--%>
-                            <%--                                                        País con más participantes--%>
-                            <%--                                                    </div>--%>
-                            <%--                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">--%>
-                            <%--                                                        <%=paisMasParticipantes%>--%>
-                            <%--                                                    </div>--%>
-                            <%--                                                </div>--%>
-                            <%--                                                <div class="col-auto">--%>
-                            <%--                                                    <i class="fas fa-globe-americas fa-2x text-gray-300"></i>--%>
-                            <%--                                                </div>--%>
-                            <%--                                            </div>--%>
-                            <%--                                        </div>--%>
-                            <%--                                    </div>--%>
-                            <%--                                </div>--%>
-                            <%--                            </div>--%>
                             <!--Participantes por país-->
                             <div class="card shadow mb-4 col-xl-7 px-0">
                                 <!-- Card Header - Dropdown -->

@@ -12,74 +12,41 @@ import java.util.Locale;
 
 public class PaisDao extends BaseDao {
 
-    public ArrayList<BPais> listarPaises(String busqueda) {
+    public ArrayList<BPais> listarPaises(int limit, int busqueda, String columna, String orden) {
+
         ArrayList<BPais> listaPaises = new ArrayList<>();
-        String sql = "";
-        String orden = "";
-        boolean filtrar = false;
 
-        if (busqueda.isEmpty() || busqueda.equals("0")) {
+        String sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+                "inner join continente c on p.idContinente = c.idContinente\n" +
+                "where p.idContinente = ? \n" +
+                "order by " + columna + " \n" + orden;
+
+        if (busqueda == 0) {
             sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
                     "inner join continente c on p.idContinente = c.idContinente\n" +
-                    "order by p.nombre asc ";
-        } else if (busqueda.length() == 1) {
-            sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                    "inner join continente c on p.idContinente = c.idContinente\n" +
-                    "where p.idContinente=?\n" +
-                    "order by p.nombre asc";
-            filtrar = true;
-        } else {
-            orden = busqueda.substring(1);
-            if (busqueda.charAt(0) == '0') {
-                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                        "inner join continente c on p.idContinente = c.idContinente\n" +
-                        "order by ";
-            } else {
-                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                        "inner join continente c on p.idContinente = c.idContinente\n" +
-                        "where p.idContinente=?\n" +
-                        "order by ";
-                filtrar = true;
-            }
-            if (orden.equals("na")) {
-                sql = sql + "p.nombre asc";
-            } else if (orden.equals("nd")) {
-                sql = sql + "p.nombre desc";
-            } else if (orden.equals("ca")) {
-                sql = sql + "c.nombre asc";
-            } else if (orden.equals("cd")) {
-                sql = sql + "c.nombre desc";
-            } else if (orden.equals("pa")) {
-                sql = sql + "p.poblacion asc";
-            } else if (orden.equals("pd")) {
-                sql = sql + "p.poblacion desc";
-            } else if (orden.equals("ta")) {
-                sql = sql + "p.tamano asc";
-            } else {
-                sql = sql + "p.tamano desc";
-            }
+                    "order by " + columna + " \n" + orden;
+        }
 
-
+        if (limit != -1) {
+            sql = sql + " limit " + limit;
         }
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            if (filtrar) {
-                pstmt.setInt(1, Integer.parseInt(busqueda.substring(0, 1)));
+
+            if (busqueda != 0) {
+                pstmt.setInt(1, busqueda);
             }
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-
-                    int idC = rs.getInt(2);
-                    String nombreC = rs.getString(6);
-                    BContinente continente = new BContinente(idC, nombreC);
-
-                    int idP = rs.getInt(1);
-                    String nombreP = rs.getString(3);
-                    int poblacionP = rs.getInt(4);
-                    double tamanoP = rs.getDouble(5);
-                    BPais pais = new BPais(idP, nombreP, poblacionP, tamanoP, continente);
-
+                    int idPais = rs.getInt(1);
+                    int idContinente = rs.getInt(2);
+                    String nombre = rs.getString(3);
+                    int poblacion = rs.getInt(4);
+                    double tamano = rs.getDouble(5);
+                    String nombreContinente = rs.getString(6);
+                    BPais pais = new BPais(idPais, nombre, poblacion, tamano, new BContinente(idContinente, nombreContinente));
                     listaPaises.add(pais);
                 }
             }
@@ -90,82 +57,82 @@ public class PaisDao extends BaseDao {
         return listaPaises;
     }
 
-    public ArrayList<BPais> listarPaises(String busqueda,int pag,int limit) {
-        ArrayList<BPais> listaPaises = new ArrayList<>();
-        String sql = "";
-        String orden = "";
-        boolean filtrar = false;
-
-        if (busqueda.isEmpty() || busqueda.equals("0")) {
-            sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                    "inner join continente c on p.idContinente = c.idContinente\n" +
-                    "order by p.nombre asc ";
-        } else if (busqueda.length() == 1) {
-            sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                    "inner join continente c on p.idContinente = c.idContinente\n" +
-                    "where p.idContinente=?\n" +
-                    "order by p.nombre asc";
-            filtrar = true;
-        } else {
-            orden = busqueda.substring(1);
-            if (busqueda.charAt(0) == '0') {
-                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                        "inner join continente c on p.idContinente = c.idContinente\n" +
-                        "order by ";
-            } else {
-                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
-                        "inner join continente c on p.idContinente = c.idContinente\n" +
-                        "where p.idContinente=?\n" +
-                        "order by ";
-                filtrar = true;
-            }
-            if (orden.equals("na")) {
-                sql = sql + "p.nombre asc";
-            } else if (orden.equals("nd")) {
-                sql = sql + "p.nombre desc";
-            } else if (orden.equals("ca")) {
-                sql = sql + "c.nombre asc";
-            } else if (orden.equals("cd")) {
-                sql = sql + "c.nombre desc";
-            } else if (orden.equals("pa")) {
-                sql = sql + "p.poblacion asc";
-            } else if (orden.equals("pd")) {
-                sql = sql + "p.poblacion desc";
-            } else if (orden.equals("ta")) {
-                sql = sql + "p.tamano asc";
-            } else {
-                sql = sql + "p.tamano desc";
-            }
-
-        }
-        sql=sql + "\nlimit "+((pag-1)*limit)+ " , "+limit;
-        try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            if (filtrar) {
-                pstmt.setInt(1, Integer.parseInt(busqueda.substring(0, 1)));
-            }
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-
-                    int idC = rs.getInt(2);
-                    String nombreC = rs.getString(6);
-                    BContinente continente = new BContinente(idC, nombreC);
-
-                    int idP = rs.getInt(1);
-                    String nombreP = rs.getString(3);
-                    int poblacionP = rs.getInt(4);
-                    double tamanoP = rs.getDouble(5);
-                    BPais pais = new BPais(idP, nombreP, poblacionP, tamanoP, continente);
-
-                    listaPaises.add(pais);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return listaPaises;
-    }
+//    public ArrayList<BPais> listarPaises(String busqueda, int pag, int limit) {
+//        ArrayList<BPais> listaPaises = new ArrayList<>();
+//        String sql = "";
+//        String orden = "";
+//        boolean filtrar = false;
+//
+//        if (busqueda.isEmpty() || busqueda.equals("0")) {
+//            sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+//                    "inner join continente c on p.idContinente = c.idContinente\n" +
+//                    "order by p.nombre asc ";
+//        } else if (busqueda.length() == 1) {
+//            sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+//                    "inner join continente c on p.idContinente = c.idContinente\n" +
+//                    "where p.idContinente=?\n" +
+//                    "order by p.nombre asc";
+//            filtrar = true;
+//        } else {
+//            orden = busqueda.substring(1);
+//            if (busqueda.charAt(0) == '0') {
+//                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+//                        "inner join continente c on p.idContinente = c.idContinente\n" +
+//                        "order by ";
+//            } else {
+//                sql = "select p.idPais,p.idContinente,p.nombre,p.poblacion,p.tamano,c.nombre from pais p\n" +
+//                        "inner join continente c on p.idContinente = c.idContinente\n" +
+//                        "where p.idContinente=?\n" +
+//                        "order by ";
+//                filtrar = true;
+//            }
+//            if (orden.equals("na")) {
+//                sql = sql + "p.nombre asc";
+//            } else if (orden.equals("nd")) {
+//                sql = sql + "p.nombre desc";
+//            } else if (orden.equals("ca")) {
+//                sql = sql + "c.nombre asc";
+//            } else if (orden.equals("cd")) {
+//                sql = sql + "c.nombre desc";
+//            } else if (orden.equals("pa")) {
+//                sql = sql + "p.poblacion asc";
+//            } else if (orden.equals("pd")) {
+//                sql = sql + "p.poblacion desc";
+//            } else if (orden.equals("ta")) {
+//                sql = sql + "p.tamano asc";
+//            } else {
+//                sql = sql + "p.tamano desc";
+//            }
+//
+//        }
+//        sql = sql + "\nlimit " + ((pag - 1) * limit) + " , " + limit;
+//        try (Connection conn = this.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            if (filtrar) {
+//                pstmt.setInt(1, Integer.parseInt(busqueda.substring(0, 1)));
+//            }
+//            try (ResultSet rs = pstmt.executeQuery()) {
+//                while (rs.next()) {
+//
+//                    int idC = rs.getInt(2);
+//                    String nombreC = rs.getString(6);
+//                    BContinente continente = new BContinente(idC, nombreC);
+//
+//                    int idP = rs.getInt(1);
+//                    String nombreP = rs.getString(3);
+//                    int poblacionP = rs.getInt(4);
+//                    double tamanoP = rs.getDouble(5);
+//                    BPais pais = new BPais(idP, nombreP, poblacionP, tamanoP, continente);
+//
+//                    listaPaises.add(pais);
+//                }
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return listaPaises;
+//    }
 
     public void insertarPais(BPais pais) throws Exception {
         String sql = "insert into pais (nombre,idContinente,poblacion,tamano)\n" +

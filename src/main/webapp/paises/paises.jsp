@@ -1,16 +1,16 @@
 <%@ page import="pe.edu.pucp.vip.Bean.BPais" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaPaises" scope="request" type="java.util.ArrayList<pe.edu.pucp.vip.Bean.BPais>"/>
-<jsp:useBean id="idcontinente" scope="request" type="java.lang.String"></jsp:useBean>
-<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String"></jsp:useBean>
-<jsp:useBean id="E" scope="request" type="java.lang.String" class="java.lang.String"></jsp:useBean>
-<jsp:useBean id="orden" scope="request" type="java.lang.String" class="java.lang.String"></jsp:useBean>
-<jsp:useBean id="limit" scope="request" type="java.lang.Integer"></jsp:useBean>
-<jsp:useBean id="pag" scope="request" type="java.lang.Integer"></jsp:useBean>
-<jsp:useBean id="paginas" scope="request" type="java.lang.Integer"></jsp:useBean>
+<jsp:useBean id="busqueda" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="E" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="orden" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="columna" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="limit" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="paginas" scope="request" type="java.lang.Integer"/>
+<%String direccionBasePag = request.getContextPath() + "/paises?busqueda=" + busqueda + "&limit=" + limit + "&orden=" + orden + "&columna=" + columna;%>
 
-<%String direccionBaseOrden = request.getContextPath() + "/paises?id=" + idcontinente + "&limit=" + limit;%>
-<%String direccionBasePag= request.getContextPath() + "/paises?id=" + idcontinente + "&limit=" + limit+"&orden="+orden;%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -96,52 +96,51 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="show-entries">
-
                                         <form method="get"
                                               action="<%=request.getContextPath()+"/paises"%>">
                                             <span>Mostrar</span>
-                                            <input hidden id="orden" name="orden" value="<%=orden%>">
-                                            <input hidden id="id" name="id" value="<%=idcontinente%>">
-                                            <select class="form-control" name="limit" id="limit"
-                                                    onchange='this.form.submit();'>
+                                            <input hidden name="columna" value="<%=columna%>">
+                                            <input hidden name="orden" value="<%=orden%>">
+                                            <input hidden name="busqueda" value="<%=busqueda%>">
+                                            <select class="form-control" name="limit" onchange='this.form.submit();'>
                                                 <option value="5" <%=limit == 5 ? "selected" : "" %>>5</option>
                                                 <option value="10" <%=limit == 10 ? "selected" : "" %>>10</option>
                                                 <option value="15" <%=limit == 15 ? "selected" : "" %>>15</option>
-                                                <option value="0" <%=limit == 0 ? "selected" : "" %>>Todo</option>
+                                                <option value="-1" <%=limit == -1 ? "selected" : "" %>>All</option>
                                             </select>
-                                            <span>Filas</span>
+                                            <span>filas</span>
                                         </form>
-
                                     </div>
                                 </div>
                                 <div class="col-sm-9">
                                     <form method="post"
                                           action="<%=request.getContextPath()%>/paises?action=buscar"
                                           id="filtro">
-                                        <button type="submit" class="btn btn-primary"><p class="bi bi-filter-circle" style="margin-top: -4px"></p>
+                                        <button type="submit" class="btn btn-primary"><p class="bi bi-filter-circle"
+                                                                                         style="margin-top: -4px"></p>
                                         </button>
                                         <div class="filter-group">
                                             <input hidden id="limitb" name="limitb" value="<%=limit%>">
-                                            <label for="idcontinente">Filtrar por
-                                                continente</label>
+                                            <input hidden name="columna" value="<%=columna%>">
+                                            <label for="idcontinente">Filtrar por continente</label>
                                             <select class="float-right form-control w-30" id="idcontinente"
-                                                    name="idcontinente">
-                                                <option value="0" <%if (idcontinente.isEmpty()) {%><%="selected"%><%}%>>
+                                                    name="idcontinente" onchange='this.form.submit();'>
+                                                <option value="0" <%if (busqueda.toString().isEmpty()) {%><%="selected"%><%}%>>
                                                     Todos
                                                 </option>
-                                                <option value="1" <%if (idcontinente.equals("1")) {%><%="selected"%><%}%>>
+                                                <option value="1" <%=busqueda == 1 ? "selected" : ""%>>
                                                     América
                                                 </option>
-                                                <option value="2" <%if (idcontinente.equals("2")) {%><%="selected"%><%}%>>
+                                                <option value="2" <%=busqueda == 2 ? "selected" : ""%>>
                                                     Europa
                                                 </option>
-                                                <option value="3" <%if (idcontinente.equals("3")) {%><%="selected"%><%}%>>
+                                                <option value="3" <%=busqueda == 3 ? "selected" : ""%>>
                                                     África
                                                 </option>
-                                                <option value="4" <%if (idcontinente.equals("4")) {%><%="selected"%><%}%>>
+                                                <option value="4" <%=busqueda == 4 ? "selected" : ""%>>
                                                     Oceanía
                                                 </option>
-                                                <option value="5" <%if (idcontinente.equals("5")) {%><%="selected"%><%}%>>
+                                                <option value="5" <%=busqueda == 5 ? "selected" : ""%>>
                                                     Asia
                                                 </option>
                                             </select>
@@ -151,120 +150,69 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-sortable table-striped table-hover">
+                        <table class="table table-striped table-hover">
                             <thead>
                                 <tr class="text-center">
-                                    <%if (orden.equals("na")) {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=nd"%>"
-                                           class="text-dark text-decoration-none"> Nombre
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else if (orden.equals("nd")) {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=na"%>"
-                                           class="text-dark text-decoration-none"> Nombre
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=na"%>"
-                                           class="text-dark text-decoration-none"> Nombre
-                                        </a></th>
-                                    <%
-                                        }
-                                        if (orden.equals("ca")) {
-                                    %>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=cd"%>"
-                                           class="text-dark text-decoration-none"> Continente
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else if (orden.equals("cd")) {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=ca"%>"
-                                           class="text-dark text-decoration-none"> Continente
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=ca"%>"
-                                           class="text-dark text-decoration-none"> Continente
-                                        </a></th>
-                                    <%
-                                        }
-                                        if (orden.equals("pd")) {
-                                    %>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=pa"%>"
-                                           class="text-dark text-decoration-none"> Población(personas)
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else if (orden.equals("pa")) {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=pd"%>"
-                                           class="text-dark text-decoration-none"> Población(personas)
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=pd"%>"
-                                           class="text-dark text-decoration-none"> Población(personas)
-                                        </a></th>
-                                    <%
-                                        }
-                                        if (orden.equals("td")) {
-                                    %>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=ta"%>"
-                                           class="text-dark text-decoration-none"> Tamaño (millones km²)
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else if (orden.equals("ta")) {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=td"%>"
-                                           class="text-dark text-decoration-none"> Tamaño (millones km²)
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                      d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-                                            </svg>
-                                        </a></th>
-                                    <%} else {%>
-                                    <th class="col-2 table-sorter">
-                                        <a href="<%=direccionBaseOrden+"&orden=td"%>"
-                                           class="text-dark text-decoration-none"> Tamaño (millones km²)
-                                        </a></th>
-                                    <%}%>
-
+                                    <th class="col-2">
+                                        <%
+                                            String hrefN = request.getContextPath() + "/paises?columna=p.nombre&orden=asc&limit=" + limit;
+                                            String classN = "fa-minus-circle";
+                                            if (columna.equals("p.nombre")) {
+                                                classN = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
+                                                hrefN = request.getContextPath() + "/paises?columna=p.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                            }
+                                        %>
+                                        <a href="<%=hrefN%>"
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
+                                            Nombre
+                                            <i class="fas <%=classN%> pt-2"></i>
+                                        </a>
+                                    </th>
+                                    <th class="col-2">
+                                        <%
+                                            String hrefC = request.getContextPath() + "/paises?columna=c.nombre&orden=asc&limit=" + limit;
+                                            String classC = "fa-minus-circle";
+                                            if (columna.equals("c.nombre")) {
+                                                classC = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
+                                                hrefC = request.getContextPath() + "/paises?columna=c.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                            }
+                                        %>
+                                        <a href="<%=hrefC%>"
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
+                                            Continente
+                                            <i class="fas <%=classC%> pt-2"></i>
+                                        </a>
+                                    </th>
+                                    <th class="col-2">
+                                        <%
+                                            String hrefP = request.getContextPath() + "/paises?columna=p.poblacion&orden=asc&limit=" + limit;
+                                            String classP = "fa-minus-circle";
+                                            if (columna.equals("p.poblacion")) {
+                                                classP = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
+                                                hrefP = request.getContextPath() + "/paises?columna=p.poblacion&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                            }
+                                        %>
+                                        <a href="<%=hrefP%>"
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
+                                            Población
+                                            <i class="fas <%=classP%> pt-2"></i>
+                                        </a>
+                                    </th>
+                                    <th class="col-2">
+                                        <%
+                                            String hrefT = request.getContextPath() + "/paises?columna=p.tamano&orden=asc&limit=" + limit;
+                                            String classT = "fa-minus-circle";
+                                            if (columna.equals("p.tamano")) {
+                                                classT = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
+                                                hrefT = request.getContextPath() + "/paises?columna=p.tamano&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                            }
+                                        %>
+                                        <a href="<%=hrefT%>"
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
+                                            Tamaño (km²)
+                                            <i class="fas <%=classT%> pt-2"></i>
+                                        </a>
+                                    </th>
                                     <th class="col-1">Editar</th>
                                     <th class="col-1">Eliminar</th>
                                 </tr>
@@ -287,9 +235,9 @@
                                     <td>
                                         <form action="<%=request.getContextPath()%>/paises?action=eliminar"
                                               method="post" id="el<%=pais.getIdPais()%>">
-                                            <input hidden id="busqueda" name="busqueda" value="<%=idcontinente%>">
-                                            <input hidden id="orden2" name="orden2" value="<%=orden%>">
-                                            <input hidden id="limite" name="limite" value="<%=limit%>">
+                                            <input hidden name="busqueda" value="<%=busqueda%>">
+                                            <input hidden name="orden2" value="<%=orden%>">
+                                            <input hidden name="limite" value="<%=limit%>">
                                             <input name="id" value="<%=pais.getIdPais()%>" hidden>
                                         </form>
                                         <a href="#" class="text-danger"

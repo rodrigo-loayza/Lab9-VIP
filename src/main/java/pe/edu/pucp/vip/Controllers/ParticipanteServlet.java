@@ -76,7 +76,7 @@ public class ParticipanteServlet extends HttpServlet {
                 break;
 
             case "crear":
-                request.setAttribute("listaPaises", paisDao.listarPaises(""));
+                request.setAttribute("listaPaises", paisDao.listarPaises(-1,0,"p.nombre","asc"));
                 view = request.getRequestDispatcher("/participante/registrarParticipante.jsp");
                 view.forward(request, response);
                 break;
@@ -84,7 +84,7 @@ public class ParticipanteServlet extends HttpServlet {
             case "editar":
                 int idParticipante = Integer.parseInt(request.getParameter("idParticipante"));
                 request.setAttribute("participante", participanteDao.participanteById(idParticipante));
-                request.setAttribute("listaPaises", paisDao.listarPaises(""));
+                request.setAttribute("listaPaises", paisDao.listarPaises(-1,0,"p.nombre","asc"));
                 view = request.getRequestDispatcher("/participante/editarParticipante.jsp");
                 view.forward(request, response);
                 break;

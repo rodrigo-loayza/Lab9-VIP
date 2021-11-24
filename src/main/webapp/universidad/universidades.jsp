@@ -113,24 +113,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="show-entries">
-                            <form method="get"
-                                  action="<%=request.getContextPath()+"/universidades"%>">
-                                <span>Mostrar</span>
-                                <input hidden id="columna" name="columna" value="<%=columna%>">
-                                <input hidden id="orden" name="orden" value="<%=orden%>">
-                                <select class="form-control" name="limit" id="limit"
-                                        onchange='this.form.submit();'>
-                                    <option value="5" <%=limit == 5 ? "selected" : "" %>>5</option>
-                                    <option value="10" <%=limit == 10 ? "selected" : "" %>>10</option>
-                                    <option value="15" <%=limit == 15 ? "selected" : "" %>>15</option>
-                                    <option value="0" <%=limit == 0 ? "selected" : "" %>>Todo</option>
-                                </select>
-                                <span>Filas</span>
-                            </form>
-
+                        <div class="table-filter">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="show-entries">
+                                        <form method="get"
+                                              action="<%=request.getContextPath()+"/universidades"%>">
+                                            <span>Mostrar</span>
+                                            <input hidden id="columna" name="columna" value="<%=columna%>">
+                                            <input hidden id="orden" name="orden" value="<%=orden%>">
+                                            <select class="form-control" name="limit" id="limit"
+                                                    onchange='this.form.submit();'>
+                                                <option value="5" <%=limit == 5 ? "selected" : "" %>>5</option>
+                                                <option value="10" <%=limit == 10 ? "selected" : "" %>>10</option>
+                                                <option value="15" <%=limit == 15 ? "selected" : "" %>>15</option>
+                                                <option value="0" <%=limit == 0 ? "selected" : "" %>>All</option>
+                                            </select>
+                                            <span>Filas</span>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
 
                         <table class="table table-hover table-bordered">
                             <!--Cabecera de la tabla -->
