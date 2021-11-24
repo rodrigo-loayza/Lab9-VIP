@@ -91,6 +91,7 @@ public class PaisServlet extends HttpServlet {
         String busqueda;
         String orden;
         String limit;
+        int pag;
         int limite;
         switch (action) {
             case "buscar":
@@ -109,22 +110,23 @@ public class PaisServlet extends HttpServlet {
                 busqueda = request.getParameter("busqueda") == null ? "" : request.getParameter("busqueda");
                 orden = request.getParameter("orden2") == null ? "na" : request.getParameter("orden2");
                 limite = request.getParameter("limite") == null ? 0 : Integer.parseInt(request.getParameter("limite"));
+                pag = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
                 if (id.isEmpty()) {
-                    response.sendRedirect(request.getContextPath() + "/paises?&orden=" + orden + "&id=" + busqueda);
+                    response.sendRedirect(request.getContextPath() + "/paises?&orden=" + orden + "&id=" + busqueda +"&limite=" +limite +"&pag="+pag);
                 } else {
                     try {
                         paisDao.borrarPais(Integer.parseInt(id));
 
                         if (busqueda.equals("0") || busqueda.isEmpty()) {
-                            response.sendRedirect(request.getContextPath() + "/paises?orden=" + orden + "&limit=" + limite + "&E=1&mensaje=1");
+                            response.sendRedirect(request.getContextPath() + "/paises?orden=" + orden + "&limit=" + limite +"&pag="+pag + "&E=1&mensaje=1");
                         } else {
-                            response.sendRedirect(request.getContextPath() + "/paises?action=buscar&orden=" + orden + "&id=" + busqueda + "&limit=" + limite + "&E=1&mensaje=1");
+                            response.sendRedirect(request.getContextPath() + "/paises?action=buscar&orden=" + orden + "&id=" + busqueda + "&limit=" + limite +"&pag="+pag  + "&E=1&mensaje=1");
                         }
                     } catch (Exception e) {
                         if (busqueda.equals("0") || busqueda.isEmpty()) {
-                            response.sendRedirect(request.getContextPath() + "/paises?orden=" + orden + "&limit=" + limite + "&mensaje=1");
+                            response.sendRedirect(request.getContextPath() + "/paises?orden=" + orden + "&limit=" + limite +"&pag="+pag + "&mensaje=1");
                         } else {
-                            response.sendRedirect(request.getContextPath() + "/paises?action=buscar&orden=" + orden + "&id=" + busqueda + "&limit=" + limite + "&mensaje=1");
+                            response.sendRedirect(request.getContextPath() + "/paises?action=buscar&orden=" + orden + "&id=" + busqueda + "&limit=" + limite +"&pag="+pag + "&mensaje=1");
                         }
 
                     }

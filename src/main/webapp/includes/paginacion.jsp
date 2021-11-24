@@ -6,9 +6,10 @@ String direccionBasePag = request.getParameter("direccionBasePag");%>
 <div class="clearfix">
     <ul class="pagination">
         <%
-            if (paginas != 0 && pag!=1) {
+            if(paginas>1){
+            if (pag!=1) {
         %>
-        <li class="page-item disabled"><a href="<%=direccionBasePag+"&pag="+(pag-1)%>">Previous</a></li>
+        <li class="page-item"><a href="<%=direccionBasePag+"&pag="+(pag-1)%>" class="page-link">Previous</a></li>
         <%
             }
         %>
@@ -25,11 +26,11 @@ String direccionBasePag = request.getParameter("direccionBasePag");%>
         %>
 
         <%
-            if (paginas != 0 && pag!=paginas) {
+            if ( pag!=paginas) {
         %>
         <li class="page-item"><a href="<%=direccionBasePag+"&pag="+(pag+1)%>" class="page-link">Next</a></li>
         <%
-            }
+            }}
         %>
 
     </ul>

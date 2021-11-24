@@ -239,6 +239,7 @@
                                             <input hidden name="busqueda" value="<%=busqueda%>">
                                             <input hidden name="orden2" value="<%=orden%>">
                                             <input hidden name="limite" value="<%=limit%>">
+                                            <input hidden name="page" value="<%=pag%>" >
                                             <input name="id" value="<%=pais.getIdPais()%>" hidden>
                                         </form>
                                         <a href="#" class="text-danger"
