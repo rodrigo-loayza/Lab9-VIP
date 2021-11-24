@@ -16,6 +16,21 @@ public class BPais {
         this.continente = continente;
     }
 
+    public BPais(int idPais, String nombre, BContinente continente) {
+        this.idPais = idPais;
+        this.nombre = nombre;
+        this.continente = continente;
+    }
+
+    public BPais(int idPais, String nombre) {
+        this.idPais = idPais;
+        this.nombre = nombre;
+    }
+
+    public BPais(int idPais) {
+        this.idPais = idPais;
+    }
+
     public BPais() {
 
     }

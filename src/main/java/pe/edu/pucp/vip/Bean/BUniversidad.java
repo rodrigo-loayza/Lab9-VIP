@@ -18,6 +18,37 @@ public class BUniversidad {
         this.pais = pais;
     }
 
+    public BUniversidad(int idUniversidad, String nombre) {
+        this.idUniversidad = idUniversidad;
+        this.nombre = nombre;
+    }
+
+    public BUniversidad(int idUniversidad, String nombre, String urlFoto) {
+        this.idUniversidad = idUniversidad;
+        this.nombre = nombre;
+        this.urlFoto = urlFoto;
+    }
+
+    public BUniversidad(int idUniversidad, String nombre, int ranking, String urlFoto, BPais pais) {
+        this.idUniversidad = idUniversidad;
+        this.nombre = nombre;
+        this.ranking = ranking;
+        this.urlFoto = urlFoto;
+        this.pais = pais;
+    }
+
+    public BUniversidad(String nombre, int ranking, String urlFoto, BPais pais) {
+        this.nombre = nombre;
+        this.ranking = ranking;
+        this.numAlumnos = numAlumnos;
+        this.urlFoto = urlFoto;
+        this.pais = pais;
+    }
+
+    public BUniversidad(int idUniversidad) {
+        this.idUniversidad = idUniversidad;
+    }
+
     public BUniversidad() {
 
     }

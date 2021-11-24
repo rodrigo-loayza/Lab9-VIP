@@ -10,6 +10,10 @@ public class BContinente {
         this.nombre = nombre;
     }
 
+    public BContinente(int idContinente) {
+        this.idContinente = idContinente;
+    }
+
     public BContinente() {
 
     }

@@ -4,7 +4,7 @@
 <%
     String columna = request.getParameter("columna") == null ? "ranking" : request.getParameter("columna");
     String orden = request.getParameter("orden") == null ? "asc" : request.getParameter("orden");
-    String alerta = request.getParameter("ecode");
+    String alerta = request.getParameter("alerta");
 %>
 
 
@@ -56,13 +56,19 @@
                         mensaje = "Hubo un error al editar la universidad";
                         break;
                     case ("error3"):
-                        mensaje = "Hubo un error al editar la banda";
+                        mensaje = "Hubo un error al eliminar la universidad";
                         break;
                     case ("error4"):
-                        mensaje = "No se puede eliminar la banda, tiene por lo menos un album asociado";
+                        mensaje = "Hubo un error al registrar el alumno";
                         break;
                     case ("error5"):
-                        mensaje = "No se puede eliminar la banda, tiene por lo menos un artista asociado";
+                        mensaje = "Hubo un error al editar el alumno";
+                        break;
+                    case ("error6"):
+                        mensaje = "Hubo un error al eliminar el alumno";
+                        break;
+                    case ("error7"):
+                        mensaje = "Hubo un error al borrar el alumno";
                         break;
                     case ("exito1"):
                         mensaje = "Se ha registrado la universidad";
@@ -71,16 +77,14 @@
                         mensaje = "Se ha editado la universidad";
                         break;
                     case ("exito3"):
-                        mensaje = "Se ha editado la banda";
+                        mensaje = "Se ha eliminado la universidad";
                         break;
                 }
         %>
         <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
-             style="margin: 30px auto 20px; width: 90%">
+             style="margin: 52px auto 0px; width: 90%">
             <%=mensaje%>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <%
             }
@@ -95,13 +99,19 @@
                                 <div class="col-sm-4">
                                     <h2>Lista de Universidades</h2>
                                 </div>
+                                <div class="col-sm-8 justify-content-end">
+                                    <a role="button" class="btn btn-primary pe-2"
+                                       href="<%=request.getContextPath()%>/universidades?action=registrarUniversidad">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <table class="table table-hover">
+                        <table class="table table-hover table-bordered">
                             <!--Cabecera de la tabla -->
                             <thead>
                                 <tr class="text-center">
-                                    <th class="col-1">
+                                    <th class="col-1" style="width: 10%;">
                                         <%
                                             String hrefR = request.getContextPath()+"/universidades?columna=ranking&orden=asc";
                                             String classR = "bi bi-caret-up";
@@ -116,7 +126,7 @@
 
                                             <i class="<%=classR%>" ></i></a>
                                     </th>
-                                    <th class="col-2">Imagen</th>
+                                    <th class="col-2" >Imagen</th>
                                     <th class="col-3">
                                         <%
                                             String hrefN = request.getContextPath()+"/universidades?columna=nombre&orden=asc";
@@ -131,7 +141,7 @@
                                             Nombre
                                             <i class="<%=classN%>" ></i></a>
                                     </th>
-                                    <th class="col-1">
+                                    <th class="col-1" style="width: 15%;">
                                         <%
                                             String hrefP = request.getContextPath()+"/universidades?columna=nombrePais&orden=asc";
                                             String classP = "bi bi-caret-up";
@@ -172,24 +182,24 @@
                                     String style ="";
                                     switch(universidad.getPais().getContinente().getIdContinente()){
                                         case(1):
-                                            style ="--bs-table-bg: #78b2de; " +
-                                                   "--bs-table-hover-bg: #789baf;";
+                                            style ="--bs-table-bg: #e68337; " +
+                                                   "--bs-table-hover-bg: #cb8337;";
                                             break;
                                         case(2):
-                                            style ="--bs-table-bg: #f2bf6d; " +
-                                                    "--bs-table-hover-bg: #b8a16d;";
+                                            style ="--bs-table-bg: #e9fa96; " +
+                                                    "--bs-table-hover-bg: #cdd796;";
                                             break;
                                         case(3):
-                                            style ="--bs-table-bg: #a8e9a8; " +
-                                                    "--bs-table-hover-bg: #96b496;";
+                                            style ="--bs-table-bg: #f2f26d; " +
+                                                    "--bs-table-hover-bg: #d3d36d;";
                                             break;
                                         case(4):
-                                            style ="--bs-table-bg: #f99678; " +
-                                                    "--bs-table-hover-bg: #bb8e78;";
+                                            style ="--bs-table-bg: #edd351; " +
+                                                    "--bs-table-hover-bg: #cfc051;";
                                             break;
                                         case(5):
-                                            style ="--bs-table-bg: #8bd5dd; " +
-                                                    "--bs-table-hover-bg: #89abae;";
+                                            style ="--bs-table-bg: #e8a841; " +
+                                                    "--bs-table-hover-bg: #cca541;";
                                             break;
                                     }
                                 %>
@@ -203,7 +213,11 @@
                                     <td><%=universidad.getPais().getNombre()%> <span class="flag-icon flag-icon-pe"></span></td>
                                     <td><%=universidad.getNumAlumnos()%></td>
                                     <td><a href="<%=request.getContextPath()%>/universidades?action=editarUniversidad&idUniversidad=<%=universidad.getIdUniversidad()%>" style="color: black"><i class="fas fa-edit"></i></a></td>
-                                    <td><a href="#" style="color: black"><i class="fas fa-trash-alt"></i></a></td>
+                                    <td>
+                                        <form id="formBorrar<%=universidad.getIdUniversidad()%>" method="post" action="<%=request.getContextPath()%>/universidades?action=eliminarUniversidad&idUniversidad=<%=universidad.getIdUniversidad()%>">
+                                            <a href="#" style="color: black" onclick="document.getElementById('formBorrar<%=universidad.getIdUniversidad()%>').submit()"><i class="fas fa-trash-alt"></i></a>
+                                        </form>
+                                    </td>
                                     <td><a href="<%=request.getContextPath()%>/universidades?action=listarAlumnos&idUniversidad=<%=universidad.getIdUniversidad()%>" style="color: black"><i class="fas fa-users"></i></a></td>
                                 </tr>
                                 <%

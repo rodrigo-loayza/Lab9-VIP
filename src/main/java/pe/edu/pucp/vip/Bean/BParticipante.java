@@ -18,6 +18,23 @@ public class BParticipante {
         this.pais = pais;
     }
 
+    public BParticipante(int idParticipante, String nombre, String apellido, int edad) {
+        this.idParticipante = idParticipante;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
+
+    public BParticipante(int idParticipante, String nombre, String apellido) {
+        this.idParticipante = idParticipante;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+
+    public BParticipante(int idParticipante) {
+        this.idParticipante = idParticipante;
+    }
+
     public BParticipante() {
 
     }

@@ -3,22 +3,29 @@ package pe.edu.pucp.vip.Bean;
 public class BAlumno extends BParticipante {
 
     private String codigo;
-    private Double promedio;
-    private boolean condicion;
+    private double promedio;
+    private boolean condicionEliminado;
     private BUniversidad universidad;
 
-    public BAlumno(int idParticipante, String nombre, String apellido, int edad, String genero, BPais pais, String codigo, Double promedio, boolean condicion, BUniversidad universidad) {
-        super(idParticipante, nombre, apellido, edad, genero, pais);
+    public BAlumno(int idParticipante, String nombre, String apellido, int edad, String codigo, double promedio, boolean condicionEliminado, BUniversidad universidad) {
+        super(idParticipante, nombre, apellido, edad);
         this.codigo = codigo;
         this.promedio = promedio;
-        this.condicion = condicion;
+        this.condicionEliminado = condicionEliminado;
         this.universidad = universidad;
     }
 
-    public BAlumno(String codigo, Double promedio, boolean condicion, BUniversidad universidad) {
+    public BAlumno(int idParticipante, String nombre, String apellido, String codigo, double promedio, BUniversidad universidad) {
+        super(idParticipante, nombre, apellido);
         this.codigo = codigo;
         this.promedio = promedio;
-        this.condicion = condicion;
+        this.universidad = universidad;
+    }
+
+    public BAlumno(int idParticipante, String codigo, double promedio, BUniversidad universidad) {
+        super(idParticipante);
+        this.codigo = codigo;
+        this.promedio = promedio;
         this.universidad = universidad;
     }
 
@@ -34,20 +41,20 @@ public class BAlumno extends BParticipante {
         this.codigo = codigo;
     }
 
-    public Double getPromedio() {
+    public double getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(Double promedio) {
+    public void setPromedio(double promedio) {
         this.promedio = promedio;
     }
 
-    public boolean isCondicion() {
-        return condicion;
+    public boolean getCondicionEliminado() {
+        return condicionEliminado;
     }
 
-    public void setCondicion(boolean condicion) {
-        this.condicion = condicion;
+    public void setCondicionEliminado(boolean condicion) {
+        this.condicionEliminado = condicion;
     }
 
     public BUniversidad getUniversidad() {
