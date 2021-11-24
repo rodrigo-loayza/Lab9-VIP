@@ -297,37 +297,11 @@
                                 <%}%>
                             </tbody>
                         </table>
-                        <div class="clearfix">
-                            <ul class="pagination">
-                                <%
-                                    if (paginas != 0 && pag!=1) {
-                                %>
-                                <li class="page-item disabled"><a href="<%=direccionBasePag+"&pag="+(pag-1)%>">Previous</a></li>
-                                <%
-                                    }
-                                %>
-
-                                <%
-                                    int i = 1;
-                                    while (i <= paginas) {
-                                %>
-                                <li class="page-item <%=i==pag? "active":""%>"><a href="<%=direccionBasePag+"&pag="+i%>" class="page-link"><%=i%>
-                                </a></li>
-                                <%
-                                        i = i + 1;
-                                    }
-                                %>
-
-                                <%
-                                    if (paginas != 0 && pag!=paginas) {
-                                %>
-                                <li class="page-item"><a href="<%=direccionBasePag+"&pag="+(pag+1)%>" class="page-link">Next</a></li>
-                                <%
-                                    }
-                                %>
-
-                            </ul>
-                        </div>
+                        <jsp:include page="/includes/paginacion.jsp">
+                            <jsp:param name="paginas" value="<%=paginas%>"/>
+                            <jsp:param name="pag" value="<%=pag%>"/>
+                            <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
+                        </jsp:include>
                     </div>
                 </div>
             </div>
