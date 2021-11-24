@@ -114,60 +114,59 @@
                                     <th class="col-1" style="width: 10%;">
                                         <%
                                             String hrefR = request.getContextPath()+"/universidades?columna=ranking&orden=asc";
-                                            String classR = "bi bi-caret-up";
+                                            String classR = "fa-minus-circle";
                                             if(columna.equals("ranking")){
-                                                classR="bi bi-caret"+(orden.equals("asc")?"-up":"-down")+"-fill";
+                                                classR="fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
                                                 hrefR = request.getContextPath()+"/universidades?columna=ranking&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefR%>"
-                                           class="text-decoration-none black" style="color: black">
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
                                             Ranking
-
-                                            <i class="<%=classR%>" ></i></a>
+                                            <i class="fas <%=classR%> pt-2"></i></a>
                                     </th>
                                     <th class="col-2" >Imagen</th>
                                     <th class="col-3">
                                         <%
                                             String hrefN = request.getContextPath()+"/universidades?columna=nombre&orden=asc";
-                                            String classN = "bi bi-caret-up";
+                                            String classN = "fa-minus-circle";
                                             if(columna.equals("nombre")){
-                                                classN="bi bi-caret"+(orden.equals("asc")?"-up":"-down")+"-fill";
+                                                classN= "fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
                                                 hrefN = request.getContextPath()+"/universidades?columna=nombre&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefN%>"
-                                           class="text-decoration-none black" style="color: black">
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
                                             Nombre
-                                            <i class="<%=classN%>" ></i></a>
+                                            <i class="fas <%=classN%> pt-2"></i></a>
                                     </th>
                                     <th class="col-1" style="width: 15%;">
                                         <%
                                             String hrefP = request.getContextPath()+"/universidades?columna=nombrePais&orden=asc";
-                                            String classP = "bi bi-caret-up";
+                                            String classP = "fa-minus-circle";
                                             if(columna.equals("nombrePais")){
-                                                classP="bi bi-caret"+(orden.equals("asc")?"-up":"-down")+"-fill";
+                                                classP="fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
                                                 hrefP = request.getContextPath()+"/universidades?columna=nombrePais&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefP%>"
-                                           class="text-decoration-none black" style="color: black">
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
                                             País
-                                            <i class="<%=classP%>" ></i></a>
+                                            <i class="fas <%=classP%> pt-2"></i></a>
                                     </th>
-                                    <th class="col-1">
+                                    <th class="col-1" style="width: 11%;">
                                         <%
                                             String hrefA = request.getContextPath()+"/universidades?columna=numAlumnos&orden=asc";
-                                            String classA = "bi bi-caret-up";
+                                            String classA = "fa-minus-circle";
                                             if(columna.equals("numAlumnos")){
-                                                classA="bi bi-caret"+(orden.equals("asc")?"-up":"-down")+"-fill";
+                                                classA="fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
                                                 hrefA = request.getContextPath()+"/universidades?columna=numAlumnos&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefA%>"
-                                           class="text-decoration-none black" style="color: black">
+                                           class="text-decoration-none text-dark d-flex justify-content-between">
                                             Alumnos
-                                            <i class="<%=classA%>" ></i></a>
+                                            <i class="fas <%=classA%> pt-2"></i></a>
                                     </th>
                                     <th class="col-1">Editar</th>
                                     <th class="col-1">Eliminar</th>
@@ -186,8 +185,8 @@
                                                    "--bs-table-hover-bg: #cb8337;";
                                             break;
                                         case(2):
-                                            style ="--bs-table-bg: #e9fa96; " +
-                                                    "--bs-table-hover-bg: #cdd796;";
+                                            style ="--bs-table-bg: #e8a841; " +
+                                                    "--bs-table-hover-bg: #cca541;";
                                             break;
                                         case(3):
                                             style ="--bs-table-bg: #f2f26d; " +
@@ -198,8 +197,8 @@
                                                     "--bs-table-hover-bg: #cfc051;";
                                             break;
                                         case(5):
-                                            style ="--bs-table-bg: #e8a841; " +
-                                                    "--bs-table-hover-bg: #cca541;";
+                                            style ="--bs-table-bg: #e9fa96; " +
+                                                    "--bs-table-hover-bg: #cdd796;";
                                             break;
                                     }
                                 %>
