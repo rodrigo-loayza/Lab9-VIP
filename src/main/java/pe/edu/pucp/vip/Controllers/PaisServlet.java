@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class PaisServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         PaisDao paisDao = new PaisDao();
         RequestDispatcher view;
@@ -84,6 +85,7 @@ public class PaisServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         PaisDao paisDao = new PaisDao();
         ArrayList<BPais> listaPaises = new ArrayList<>();
