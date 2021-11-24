@@ -1,8 +1,9 @@
 <%@ page import="pe.edu.pucp.vip.Bean.BUniversidad" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaUniversidades" scope="request" type="java.util.ArrayList<pe.edu.pucp.vip.Bean.BUniversidad>"/>
-<jsp:useBean id="pag" scope="request" type="java.lang.Integer"></jsp:useBean>
-<jsp:useBean id="paginas" scope="request" type="java.lang.Integer"></jsp:useBean>
+<jsp:useBean id="pag" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="totalUniversidades" scope="request" type="java.lang.Integer"/>
 <%
     String columna = request.getParameter("columna") == null ? "ranking" : request.getParameter("columna");
     String orden = request.getParameter("orden") == null ? "asc" : request.getParameter("orden");
@@ -253,11 +254,17 @@
                                 %>
                             </tbody>
                         </table>
-                        <jsp:include page="/includes/paginacion.jsp">
-                            <jsp:param name="paginas" value="<%=paginas%>"/>
-                            <jsp:param name="pag" value="<%=pag%>"/>
-                            <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
-                        </jsp:include>
+                        <div class="clearfix">
+                            <div class="hint-text">Mostrando <b><%=listaUniversidades.size()%>
+                            </b> de <b><%=totalUniversidades%>
+                            </b> universidades
+                            </div>
+                            <jsp:include page="/includes/paginacion.jsp">
+                                <jsp:param name="paginas" value="<%=paginas%>"/>
+                                <jsp:param name="pag" value="<%=pag%>"/>
+                                <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
+                            </jsp:include>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -123,7 +123,10 @@
                                         <span>Mostrar</span>
                                         <label>
                                             <form method='get'
-                                                  action='<%=request.getContextPath()%>/participantes?action=listar&columna=<%=columna%>&orden=<%=orden%>'>
+                                                  action='<%=request.getContextPath()%>/participantes?action=listar'>
+                                                <input name="columna" value="<%=columna%>" hidden>
+                                                <input name="orden" value="<%=orden%>" hidden>
+                                                <input name="busqueda" value="<%=busqueda%>" hidden>
                                                 <select class="form-control" name="limit"
                                                         onchange='this.form.submit();'>
                                                     <option value="5" <%=limit == 5 ? "selected" : ""%>>5</option>
@@ -137,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-9">
-                                    <form method="post"
+                                    <form method="get"
                                           action="<%=request.getContextPath()%>/participantes?action=listar">
                                         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>
                                         </button>
@@ -146,6 +149,9 @@
                                             <input type="text" class="form-control" name="busqueda"
                                                    value="<%=busqueda%>">
                                         </div>
+                                        <input name="columna" value="<%=columna%>" hidden>
+                                        <input name="orden" value="<%=orden%>" hidden>
+                                        <input name="limit" value="<%=limit%>" hidden>
                                     </form>
                                 </div>
                             </div>
@@ -159,7 +165,7 @@
                                             String classN = "fa-minus-circle";
                                             if (columna.equals("p.nombre")) {
                                                 classN = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefN = request.getContextPath() + "/participantes?columna=p.nombre&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefN = request.getContextPath() + "/participantes?columna=p.nombre&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
                                             }
                                         %>
                                         <a href="<%=hrefN%>"
@@ -173,7 +179,7 @@
                                             String classA = "fa-minus-circle";
                                             if (columna.equals("p.apellido")) {
                                                 classA = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefA = request.getContextPath() + "/participantes?columna=p.apellido&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefA = request.getContextPath() + "/participantes?columna=p.apellido&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
                                             }
                                         %>
                                         <a href="<%=hrefA%>"
@@ -188,7 +194,7 @@
                                             String classE = "fa-minus-circle";
                                             if (columna.equals("p.edad")) {
                                                 classE = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefE = request.getContextPath() + "/participantes?columna=p.edad&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefE = request.getContextPath() + "/participantes?columna=p.edad&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
                                             }
                                         %>
                                         <a href="<%=hrefE%>"
@@ -203,7 +209,7 @@
                                             String classNa = "fa-minus-circle";
                                             if (columna.equals("p2.nombre")) {
                                                 classNa = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&busqueda=" +busqueda+"&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&busqueda=" +busqueda+"&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
                                             }
                                         %>
                                         <a href="<%=hrefNa%>"
@@ -218,7 +224,7 @@
                                             String classG = "fa-minus-circle";
                                             if (columna.equals("p.genero")) {
                                                 classG = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefG = request.getContextPath() + "/participantes?columna=p.genero&busqueda=" +busqueda+"&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefG = request.getContextPath() + "/participantes?columna=p.genero&busqueda=" +busqueda+"&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
                                             }
                                         %>
                                         <a href="<%=hrefG%>"
@@ -265,27 +271,16 @@
                                 %>
                             </tbody>
                         </table>
-                        <jsp:include page="/includes/paginacion.jsp">
-                            <jsp:param name="paginas" value="<%=paginas%>"/>
-                            <jsp:param name="pag" value="<%=pag%>"/>
-                            <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
-                        </jsp:include>
                         <div class="clearfix">
-                            <div class="hint-text">Mostrando <b><%=limit == -1 ? totalParticipantes : limit%>
+                            <div class="hint-text">Mostrando <b><%=listaParticipantes.size()%>
                             </b> de <b><%=totalParticipantes%>
                             </b> participantes
                             </div>
-                            <%--                            <ul class="pagination">--%>
-                            <%--                                <li class="page-item disabled"><a href="#">Previous</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">1</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">2</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">3</a></li>--%>
-                            <%--                                <li class="page-item active"><a href="#" class="page-link">4</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">5</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">6</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">7</a></li>--%>
-                            <%--                                <li class="page-item"><a href="#" class="page-link">Next</a></li>--%>
-                            <%--                            </ul>--%>
+                            <jsp:include page="/includes/paginacion.jsp">
+                                <jsp:param name="paginas" value="<%=paginas%>"/>
+                                <jsp:param name="pag" value="<%=pag%>"/>
+                                <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
+                            </jsp:include>
                         </div>
                     </div>
                 </div>

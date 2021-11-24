@@ -33,6 +33,7 @@ public class PaisServlet extends HttpServlet {
                 request.setAttribute("limit", limit);
                 int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
 
+                request.setAttribute("totalPaises", paisDao.listarPaises(-1,0,columna,orden).size());
                 ArrayList<BPais> listaPa = paisDao.listarPaises(-1, busqueda, columna, orden);
                 int total = listaPa.size();
 

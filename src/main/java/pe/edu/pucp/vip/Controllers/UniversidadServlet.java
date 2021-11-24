@@ -38,6 +38,8 @@ public class UniversidadServlet extends HttpServlet {
                 ArrayList<BUniversidad> listaUni = universidadDAO.listarUniversidades(columna, orden);
                 int total = listaUni.size();
 
+                request.setAttribute("totalUniversidades", total);
+
                 ArrayList<BUniversidad> listaUniversidades = new ArrayList<>();
                 int paginas = 0;
                 int max = limit * pag;

@@ -9,6 +9,7 @@
 <jsp:useBean id="limit" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="pag" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="totalPaises" scope="request" type="java.lang.Integer"/>
 <%String direccionBasePag = request.getContextPath() + "/paises?busqueda=" + busqueda + "&limit=" + limit + "&orden=" + orden + "&columna=" + columna;%>
 
 <!DOCTYPE html>
@@ -155,11 +156,11 @@
                                 <tr class="text-center">
                                     <th class="col-2">
                                         <%
-                                            String hrefN = request.getContextPath() + "/paises?columna=p.nombre&orden=asc&limit=" + limit;
+                                            String hrefN = request.getContextPath() + "/paises?columna=p.nombre&orden=asc&limit=" + limit + "&busqueda=" + busqueda;
                                             String classN = "fa-minus-circle";
                                             if (columna.equals("p.nombre")) {
                                                 classN = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefN = request.getContextPath() + "/paises?columna=p.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                                hrefN = request.getContextPath() + "/paises?columna=p.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit + "&busqueda=" + busqueda;
                                             }
                                         %>
                                         <a href="<%=hrefN%>"
@@ -170,11 +171,11 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefC = request.getContextPath() + "/paises?columna=c.nombre&orden=asc&limit=" + limit;
+                                            String hrefC = request.getContextPath() + "/paises?columna=c.nombre&orden=asc&limit=" + limit + "&busqueda=" + busqueda;
                                             String classC = "fa-minus-circle";
                                             if (columna.equals("c.nombre")) {
                                                 classC = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefC = request.getContextPath() + "/paises?columna=c.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                                hrefC = request.getContextPath() + "/paises?columna=c.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit + "&busqueda=" + busqueda;
                                             }
                                         %>
                                         <a href="<%=hrefC%>"
@@ -185,11 +186,11 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefP = request.getContextPath() + "/paises?columna=p.poblacion&orden=asc&limit=" + limit;
+                                            String hrefP = request.getContextPath() + "/paises?columna=p.poblacion&orden=asc&limit=" + limit + "&busqueda=" + busqueda;
                                             String classP = "fa-minus-circle";
                                             if (columna.equals("p.poblacion")) {
                                                 classP = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefP = request.getContextPath() + "/paises?columna=p.poblacion&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                                hrefP = request.getContextPath() + "/paises?columna=p.poblacion&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit + "&busqueda=" + busqueda;
                                             }
                                         %>
                                         <a href="<%=hrefP%>"
@@ -200,11 +201,11 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefT = request.getContextPath() + "/paises?columna=p.tamano&orden=asc&limit=" + limit;
+                                            String hrefT = request.getContextPath() + "/paises?columna=p.tamano&orden=asc&limit=" + limit + "&busqueda=" + busqueda;
                                             String classT = "fa-minus-circle";
                                             if (columna.equals("p.tamano")) {
                                                 classT = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefT = request.getContextPath() + "/paises?columna=p.tamano&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit;
+                                                hrefT = request.getContextPath() + "/paises?columna=p.tamano&orden=" + (orden.equals("asc") ? "desc" : "asc") + "&limit=" + limit + "&busqueda=" + busqueda;
                                             }
                                         %>
                                         <a href="<%=hrefT%>"
@@ -248,16 +249,22 @@
                                 <%}%>
                             </tbody>
                         </table>
-                        <jsp:include page="/includes/paginacion.jsp">
-                            <jsp:param name="paginas" value="<%=paginas%>"/>
-                            <jsp:param name="pag" value="<%=pag%>"/>
-                            <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
-                        </jsp:include>
+
+                        <div class="clearfix">
+                            <div class="hint-text">Mostrando <b><%=listaPaises.size()%>
+                            </b> de <b><%=totalPaises%>
+                            </b> países
+                            </div>
+                            <jsp:include page="/includes/paginacion.jsp">
+                                <jsp:param name="paginas" value="<%=paginas%>"/>
+                                <jsp:param name="pag" value="<%=pag%>"/>
+                                <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
+                            </jsp:include>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
         <!--JS-->
         <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
