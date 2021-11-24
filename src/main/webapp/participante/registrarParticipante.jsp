@@ -41,17 +41,19 @@
                                 <form method="post"
                                       action="<%=request.getContextPath()%>/participantes?action=crear">
                                     <div class="mb-3">
+                                        <!--El pattern ayudará a validar que no se ingrese numeros en los nombres-->
                                         <input class="form-control mb-3" type="text" name="nombre"
-                                               placeholder="Nombre" maxlength="45" pattern="[A-Za-z]+"
+                                               placeholder="Nombre" maxlength="45" pattern="[A-zÀ-ž\s]+"
                                                required>
                                     </div>
                                     <div class="mb-3">
                                         <input class="form-control mb-3" type="text" name="apellido"
-                                               placeholder="Apellido"
+                                               placeholder="Apellido" pattern="[A-zÀ-ž\s]+"
                                                maxlength="45" required>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
+                                            <!--El min hará que no se acepten numeros menores a 18-->
                                             <input class="form-control" type="number" name="edad"
                                                    placeholder="Edad" step="1"
                                                    min="18" required>

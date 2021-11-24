@@ -43,16 +43,20 @@
                                       action="<%=request.getContextPath()%>/participantes?action=editar">
                                     <input name="idParticipante" value="<%=participante.getIdParticipante()%>" hidden>
                                     <div class="mb-3">
+                                        <!--El pattern ayudará a validar que no se ingrese numeros en los nombres-->
                                         <input class="form-control mb-3" type="text" name="nombre"
                                                placeholder="Nombre" maxlength="45" value="<%=participante.getNombre()%>"
+                                               pattern="[A-zÀ-ž\s]+"
                                                required>
                                     </div>
                                     <div class="mb-3">
                                         <input class="form-control mb-3" type="text" name="apellido"
                                                placeholder="Apellido" value="<%=participante.getApellido()%>"
+                                               pattern="[A-zÀ-ž\s]+"
                                                maxlength="45" required>
                                     </div>
                                     <div class="row mb-3">
+                                        <!--El min hará que no se acepten numeros menores a 18-->
                                         <div class="col-md-6">
                                             <input class="form-control" type="number" name="edad"
                                                    placeholder="Edad" value="<%=participante.getEdad()%>"
