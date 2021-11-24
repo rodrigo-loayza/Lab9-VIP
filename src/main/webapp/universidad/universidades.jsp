@@ -99,10 +99,11 @@
                                 <div class="col-sm-4">
                                     <h2>Lista de Universidades</h2>
                                 </div>
-                                <div class="col-sm-8 justify-content-end">
-                                    <a role="button" class="btn btn-primary pe-2"
+                                <div class="col-sm-8 text-end" style="margin-top: -8px">
+                                    <a role="button" class="text-warning"
                                        href="<%=request.getContextPath()%>/universidades?action=registrarUniversidad">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="bi bi-plus-circle-fill"
+                                        style="font-size: 30px"></i>
                                     </a>
                                 </div>
                             </div>

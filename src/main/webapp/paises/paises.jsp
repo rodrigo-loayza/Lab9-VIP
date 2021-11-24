@@ -22,6 +22,7 @@
               crossorigin="anonymous">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/res/css/estilos.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet">
@@ -82,10 +83,11 @@
                                 <div class="col-sm-4">
                                     <h2>Lista de Países</h2>
                                 </div>
-                                <div class="col-sm-8 justify-content-end">
-                                    <a role="button" class="btn btn-primary pe-2"
+                                <div class="col-sm-8 text-end" style="margin-top: -8px">
+                                    <a role="button" class="text-warning"
                                        href="<%=request.getContextPath()%>/paises?action=registrar">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="bi bi-plus-circle-fill"
+                                           style="font-size: 30px;"></i>
                                     </a>
                                 </div>
                             </div>
@@ -113,13 +115,16 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-9">
-                                    <form method="post" action="<%=request.getContextPath()%>/paises?action=buscar"
+                                    <form method="post"
+                                          action="<%=request.getContextPath()%>/paises?action=buscar"
                                           id="filtro">
-                                        <div class="form-group d-flex flex-row-reverse">
+                                        <button type="submit" class="btn btn-primary"><p class="bi bi-filter-circle" style="margin-top: -4px"></p>
+                                        </button>
+                                        <div class="filter-group">
                                             <input hidden id="limitb" name="limitb" value="<%=limit%>">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>
-                                            </button>
-                                            <select class="float-right form-control w-25" id="idcontinente"
+                                            <label for="idcontinente">Filtrar por
+                                                continente</label>
+                                            <select class="float-right form-control w-30" id="idcontinente"
                                                     name="idcontinente">
                                                 <option value="0" <%if (idcontinente.isEmpty()) {%><%="selected"%><%}%>>
                                                     Todos
@@ -140,8 +145,6 @@
                                                     Asia
                                                 </option>
                                             </select>
-                                            <label class="float-right h-30" for="idcontinente">Buscar por
-                                                continente</label>
                                         </div>
                                     </form>
                                     </button>
@@ -289,7 +292,7 @@
                                             <input hidden id="limite" name="limite" value="<%=limit%>">
                                             <input name="id" value="<%=pais.getIdPais()%>" hidden>
                                         </form>
-                                        <a href="#"
+                                        <a href="#" class="text-danger"
                                            onclick="document.getElementById('el<%=pais.getIdPais()%>').submit()"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </td>

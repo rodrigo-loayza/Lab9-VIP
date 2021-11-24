@@ -70,17 +70,20 @@
                     <div class="table-wrapper">
                         <div class="table-title ">
                             <div class="row">
-                                <div class="col-sm-8" style="width: 18%;">
-                                    <img src="<%=universidad.getUrlFoto()%>" class="img-fluid " alt="<%=universidad.getNombre()%>" style="max-height: 120px; background-color: #fff;border-radius: 0.25rem">
+                                <div class="row" style="width: 95%;">
+                                    <div class="col-sm-8" style="width: fit-content;">
+                                        <img src="<%=universidad.getUrlFoto()%>" class="img-fluid " alt="<%=universidad.getNombre()%>" style="max-height: 120px; background-color: #fff;border-radius: 0.25rem">
+                                    </div>
+                                    <div class="col-sm-8" style="width: fit-content;">
+                                        <h1><%=universidad.getNombre()%></h1>
+                                        <h5><%=universidad.getPais().getNombre()%></h5>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8" style="width: 77%;">
-                                    <h1><%=universidad.getNombre()%></h1>
-                                    <h5><%=universidad.getPais().getNombre()%></h5>
-                                </div>
-                                <div class="col-sm-8 justify-content-end" style="width: 5%;">
-                                    <a role="button" class="btn btn-primary pe-2"
+                                <div class="col-sm-8 text-end" style="width: 5%">
+                                    <a role="button" class="text-warning"
                                        href="<%=request.getContextPath()%>/universidades?action=registrarAlumno&idUniversidad=<%=universidad.getIdUniversidad()%>">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="bi bi-person-plus-fill"
+                                           style="font-size: 30px;"></i>
                                     </a>
                                 </div>
                             </div>
@@ -121,10 +124,20 @@
                                     <td class="<%=classText%>"><%=alumno.getCodigo()%></td>
                                     <td class="<%=classText%>"><%=String.format("%.2f", alumno.getPromedio())%></td>
                                     <td class="<%=classText%>"><i class="<%=classStIcon%>"></i> <%=condicion%></td>
-                                    <td class="<%=classText%>"><a href="<%=request.getContextPath()%>/universidades?action=editarAlumno&idUniversidad=<%=universidad.getIdUniversidad()%>&idParticipante=<%=alumno.getIdParticipante()%>"><i class="fas fa-edit"></i></a></td>
-                                    <td>
+                                    <td class="<%=classText%>">
+                                        <%
+                                        if(!alumno.getCondicionEliminado()){
+                                        %>
+                                        <a href="<%=request.getContextPath()%>/universidades?action=editarAlumno&idUniversidad=<%=universidad.getIdUniversidad()%>&idParticipante=<%=alumno.getIdParticipante()%>">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <%
+                                        }
+                                        %>
+                                    </td>
+                                    <td class="text-danger">
                                         <form id="formBorrar<%=alumno.getIdParticipante()%>" method="post" action="<%=action%>">
-                                            <a href="#" style="color: black" onclick="document.getElementById('formBorrar<%=alumno.getIdParticipante()%>').submit()"><i class="<%=classDelIcon%>"></i></a>
+                                            <a href="#" class="text-danger" style="color: black" onclick="document.getElementById('formBorrar<%=alumno.getIdParticipante()%>').submit()"><i class="<%=classDelIcon%>"></i></a>
                                         </form>
                                     </td>
                                 </tr>
