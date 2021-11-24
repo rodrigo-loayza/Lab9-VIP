@@ -1,10 +1,14 @@
 <%@ page import="pe.edu.pucp.vip.Bean.BUniversidad" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaUniversidades" scope="request" type="java.util.ArrayList<pe.edu.pucp.vip.Bean.BUniversidad>"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.Integer"></jsp:useBean>
+<jsp:useBean id="paginas" scope="request" type="java.lang.Integer"></jsp:useBean>
 <%
     String columna = request.getParameter("columna") == null ? "ranking" : request.getParameter("columna");
     String orden = request.getParameter("orden") == null ? "asc" : request.getParameter("orden");
     String alerta = request.getParameter("alerta");
+    int limit = request.getParameter("limit")==null? 0 : Integer.parseInt(request.getParameter("limit"));
+    String direccionBasePag= request.getContextPath() + "/universidades?columna="+columna+"&limit="+limit+"&orden="+orden;
 %>
 
 
@@ -108,17 +112,36 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="show-entries">
+                            <form method="get"
+                                  action="<%=request.getContextPath()+"/universidades"%>">
+                                <span>Mostrar</span>
+                                <input hidden id="columna" name="columna" value="<%=columna%>">
+                                <input hidden id="orden" name="orden" value="<%=orden%>">
+                                <select class="form-control" name="limit" id="limit"
+                                        onchange='this.form.submit();'>
+                                    <option value="5" <%=limit == 5 ? "selected" : "" %>>5</option>
+                                    <option value="10" <%=limit == 10 ? "selected" : "" %>>10</option>
+                                    <option value="15" <%=limit == 15 ? "selected" : "" %>>15</option>
+                                    <option value="0" <%=limit == 0 ? "selected" : "" %>>Todo</option>
+                                </select>
+                                <span>Filas</span>
+                            </form>
+
+                        </div>
+
+
                         <table class="table table-hover table-bordered">
                             <!--Cabecera de la tabla -->
                             <thead>
                                 <tr class="text-center">
                                     <th class="col-1" style="width: 10%;">
                                         <%
-                                            String hrefR = request.getContextPath()+"/universidades?columna=ranking&orden=asc";
+                                            String hrefR = request.getContextPath()+"/universidades?columna=ranking&orden=asc&limit="+limit;
                                             String classR = "fa-minus-circle";
                                             if(columna.equals("ranking")){
                                                 classR="fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
-                                                hrefR = request.getContextPath()+"/universidades?columna=ranking&orden="+(orden.equals("asc")?"desc":"asc");
+                                                hrefR = request.getContextPath()+"/universidades?columna=ranking&limit="+limit+"&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefR%>"
@@ -129,11 +152,11 @@
                                     <th class="col-2" >Imagen</th>
                                     <th class="col-3">
                                         <%
-                                            String hrefN = request.getContextPath()+"/universidades?columna=nombre&orden=asc";
+                                            String hrefN = request.getContextPath()+"/universidades?columna=nombre&orden=asc&limit="+limit;
                                             String classN = "fa-minus-circle";
                                             if(columna.equals("nombre")){
                                                 classN= "fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
-                                                hrefN = request.getContextPath()+"/universidades?columna=nombre&orden="+(orden.equals("asc")?"desc":"asc");
+                                                hrefN = request.getContextPath()+"/universidades?columna=nombre&limit="+limit+ "&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefN%>"
@@ -143,11 +166,11 @@
                                     </th>
                                     <th class="col-1" style="width: 15%;">
                                         <%
-                                            String hrefP = request.getContextPath()+"/universidades?columna=nombrePais&orden=asc";
+                                            String hrefP = request.getContextPath()+"/universidades?columna=nombrePais&orden=asc&limit="+limit;
                                             String classP = "fa-minus-circle";
                                             if(columna.equals("nombrePais")){
                                                 classP="fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
-                                                hrefP = request.getContextPath()+"/universidades?columna=nombrePais&orden="+(orden.equals("asc")?"desc":"asc");
+                                                hrefP = request.getContextPath()+"/universidades?columna=nombrePais&limit="+limit +"&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefP%>"
@@ -157,11 +180,11 @@
                                     </th>
                                     <th class="col-1" style="width: 11%;">
                                         <%
-                                            String hrefA = request.getContextPath()+"/universidades?columna=numAlumnos&orden=asc";
+                                            String hrefA = request.getContextPath()+"/universidades?columna=numAlumnos&orden=asc&limit="+limit;
                                             String classA = "fa-minus-circle";
                                             if(columna.equals("numAlumnos")){
                                                 classA="fa-chevron-circle"+(orden.equals("asc")?"-up":"-down");
-                                                hrefA = request.getContextPath()+"/universidades?columna=numAlumnos&orden="+(orden.equals("asc")?"desc":"asc");
+                                                hrefA = request.getContextPath()+"/universidades?columna=numAlumnos&limit="+limit+ "&orden="+(orden.equals("asc")?"desc":"asc");
                                             }
                                         %>
                                         <a href="<%=hrefA%>"
@@ -225,6 +248,11 @@
                                 %>
                             </tbody>
                         </table>
+                        <jsp:include page="/includes/paginacion.jsp">
+                            <jsp:param name="paginas" value="<%=paginas%>"/>
+                            <jsp:param name="pag" value="<%=pag%>"/>
+                            <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
+                        </jsp:include>
                     </div>
                 </div>
             </div>
