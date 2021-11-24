@@ -2,6 +2,7 @@ package pe.edu.pucp.vip.Controllers;
 
 import pe.edu.pucp.vip.Bean.BPais;
 import pe.edu.pucp.vip.Bean.BParticipante;
+import pe.edu.pucp.vip.Bean.BUniversidad;
 import pe.edu.pucp.vip.Dao.PaisDao;
 import pe.edu.pucp.vip.Dao.ParticipanteDao;
 
@@ -9,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "ParticipanteServlet", value = "/participantes")
 public class ParticipanteServlet extends HttpServlet {
@@ -26,6 +28,7 @@ public class ParticipanteServlet extends HttpServlet {
             case "listar":
                 //Parametros para listar
                 String busqueda = request.getParameter("busqueda") == null ? "" : request.getParameter("busqueda");
+                int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
                 request.setAttribute("busqueda", busqueda);
                 int limit = request.getParameter("limit") == null ? 5 : Integer.parseInt(request.getParameter("limit"));
                 request.setAttribute("limit", limit);
@@ -33,8 +36,29 @@ public class ParticipanteServlet extends HttpServlet {
                 request.setAttribute("columna", columna);
                 String orden = request.getParameter("orden") == null ? "asc" : request.getParameter("orden");
                 request.setAttribute("orden", orden);
+
+                ArrayList<BParticipante> listaPar = participanteDao.listarParticipantes(-1, busqueda, columna, orden);
+                ArrayList<BParticipante> listaParticipantes = new ArrayList<>();
+                int total = listaPar.size();
+                int paginas = 0;
+                int max= limit*pag;
+                if(max>total){
+                    max=total;
+                }
+                if (limit != -1) {
+                    int inicial=((pag - 1) * limit);
+                    paginas = (total % limit) == 0 ? total / limit : (total / limit) + 1;
+                    for (int i = inicial; i < max; i++) {
+                        listaParticipantes.add(listaPar.get(i));
+                    }
+                } else {
+                    listaParticipantes = listaPar;
+                }
+                request.setAttribute("paginas", paginas);
+                request.setAttribute("pag", pag);
+
                 request.setAttribute("totalParticipantes", participanteDao.listarParticipantes(-1, "", columna, orden).size());
-                request.setAttribute("listaParticipantes", participanteDao.listarParticipantes(limit, busqueda, columna, orden));
+                request.setAttribute("listaParticipantes", listaParticipantes);
 
                 //Alerta
                 request.setAttribute("resultado", resultado);

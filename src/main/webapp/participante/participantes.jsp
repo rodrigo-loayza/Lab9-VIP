@@ -13,8 +13,11 @@
 <jsp:useBean id="cantPais" scope="request" type="java.util.HashMap<java.lang.String, java.lang.Integer>"/>
 <jsp:useBean id="cantOtrosPaises" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="resultado" scope="request" type="java.lang.String"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="paginas" scope="request" type="java.lang.Integer"/>
 
 <%
+    String direccionBasePag = request.getContextPath()+"/participantes?busqueda="+busqueda+"&limit="+limit+"&columna="+columna+"&orden="+orden;
     //Mapeo de las listas de paises y su cantidad de participantes para pasarlas a javascript
     Set<String> keys = cantPais.keySet();
     String[] paisC = keys.toArray(new String[keys.size()]);
@@ -152,11 +155,11 @@
                                 <tr class="text-center" id="cabecera-container">
                                     <th class="col-2">
                                         <%
-                                            String hrefN = request.getContextPath() + "/participantes?columna=p.nombre&orden=asc&limit=" + limit;
+                                            String hrefN = request.getContextPath() + "/participantes?columna=p.nombre&busqueda="+busqueda+ "&orden=asc&limit=" + limit;
                                             String classN = "fa-minus-circle";
                                             if (columna.equals("p.nombre")) {
                                                 classN = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefN = request.getContextPath() + "/participantes?columna=p.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefN = request.getContextPath() + "/participantes?columna=p.nombre&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc");
                                             }
                                         %>
                                         <a href="<%=hrefN%>"
@@ -166,11 +169,11 @@
                                     </th>
                                     <th class="col-3">
                                         <%
-                                            String hrefA = request.getContextPath() + "/participantes?columna=p.apellido&orden=asc&limit=" + limit;
+                                            String hrefA = request.getContextPath() + "/participantes?columna=p.apellido&busqueda=" +busqueda+"&orden=asc&limit=" + limit;
                                             String classA = "fa-minus-circle";
                                             if (columna.equals("p.apellido")) {
                                                 classA = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefA = request.getContextPath() + "/participantes?columna=p.apellido&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefA = request.getContextPath() + "/participantes?columna=p.apellido&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc");
                                             }
                                         %>
                                         <a href="<%=hrefA%>"
@@ -181,11 +184,11 @@
                                     </th>
                                     <th class="col-1">
                                         <%
-                                            String hrefE = request.getContextPath() + "/participantes?columna=p.edad&orden=asc&limit=" + limit;
+                                            String hrefE = request.getContextPath() + "/participantes?columna=p.edad&busqueda=" +busqueda+"&orden=asc&limit=" + limit;
                                             String classE = "fa-minus-circle";
                                             if (columna.equals("p.edad")) {
                                                 classE = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefE = request.getContextPath() + "/participantes?columna=p.edad&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefE = request.getContextPath() + "/participantes?columna=p.edad&busqueda="+busqueda+ "&orden=" + (orden.equals("asc") ? "desc" : "asc");
                                             }
                                         %>
                                         <a href="<%=hrefE%>"
@@ -196,11 +199,11 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&orden=asc&limit=" + limit;
+                                            String hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&busqueda=" +busqueda+"&orden=asc&limit=" + limit;
                                             String classNa = "fa-minus-circle";
                                             if (columna.equals("p2.nombre")) {
                                                 classNa = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&busqueda=" +busqueda+"&orden=" + (orden.equals("asc") ? "desc" : "asc");
                                             }
                                         %>
                                         <a href="<%=hrefNa%>"
@@ -211,11 +214,11 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefG = request.getContextPath() + "/participantes?columna=p.genero&orden=asc&limit=" + limit;
+                                            String hrefG = request.getContextPath() + "/participantes?columna=p.genero&busqueda="+busqueda+ "&orden=asc&limit=" + limit;
                                             String classG = "fa-minus-circle";
                                             if (columna.equals("p.genero")) {
                                                 classG = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
-                                                hrefG = request.getContextPath() + "/participantes?columna=p.genero&orden=" + (orden.equals("asc") ? "desc" : "asc");
+                                                hrefG = request.getContextPath() + "/participantes?columna=p.genero&busqueda=" +busqueda+"&orden=" + (orden.equals("asc") ? "desc" : "asc");
                                             }
                                         %>
                                         <a href="<%=hrefG%>"
@@ -262,6 +265,11 @@
                                 %>
                             </tbody>
                         </table>
+                        <jsp:include page="/includes/paginacion.jsp">
+                            <jsp:param name="paginas" value="<%=paginas%>"/>
+                            <jsp:param name="pag" value="<%=pag%>"/>
+                            <jsp:param name="direccionBasePag" value="<%=direccionBasePag%>"/>
+                        </jsp:include>
                         <div class="clearfix">
                             <div class="hint-text">Mostrando <b><%=limit == -1 ? totalParticipantes : limit%>
                             </b> de <b><%=totalParticipantes%>
