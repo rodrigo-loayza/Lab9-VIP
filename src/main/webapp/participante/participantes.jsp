@@ -1,4 +1,5 @@
 <%@ page import="pe.edu.pucp.vip.Bean.BParticipante" %>
+<%@ page import="java.util.Set" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="limit" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="busqueda" scope="request" type="java.lang.String"/>
@@ -8,8 +9,20 @@
 <jsp:useBean id="listaParticipantes" scope="request" type="java.util.ArrayList<pe.edu.pucp.vip.Bean.BParticipante>"/>
 <jsp:useBean id="paisMasParticipantes" scope="request" type="java.lang.String"/>
 <jsp:useBean id="edadPromedio" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="listaPorcentajesGenero" scope="request" type="java.util.HashMap<java.lang.String, java.lang.Integer>"/>
+<jsp:useBean id="pctGenero" scope="request" type="java.util.HashMap<java.lang.String, java.lang.Integer>"/>
+<jsp:useBean id="cantPais" scope="request" type="java.util.HashMap<java.lang.String, java.lang.Integer>"/>
+<jsp:useBean id="cantOtrosPaises" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="resultado" scope="request" type="java.lang.String"/>
+
+<%
+    //Mapeo de las listas de paises y su cantidad de participantes para pasarlas a javascript
+    Set<String> keys = cantPais.keySet();
+    String[] paisC = keys.toArray(new String[keys.size()]);
+    int[] cantP = new int[5];
+    for (int i = 0; i < 5; i++) {
+        cantP[i] = cantPais.get(paisC[i]);
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +44,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css"
               integrity="sha512-SUJFImtiT87gVCOXl3aGC00zfDl6ggYAw5+oheJvRJ8KBXZrr/TMISSdVJ5bBarbQDRC2pR5Kto3xTR0kpZInA=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     </head>
-    <body onload="/*pais();*/genero(<%=listaPorcentajesGenero.get("hombre")%>,<%=listaPorcentajesGenero.get("mujer")%>,<%=listaPorcentajesGenero.get("otros")%>);">
+    <%--pais(<%=listaPaisesCantidad.toString()%>,<%=listaCantidadPaises.toString()%>,<%=cantOtrosPaises%>);--%>
+    <body onload="start(<%=pctGenero.get("hombre")%>,<%=pctGenero.get("mujer")%>,<%=pctGenero.get("otros")%>,<%="'"+paisC[0]+"'"%>,<%="'"+paisC[1]+"'"%>,<%="'"+paisC[2]+"'"%>,<%="'"+paisC[3]+"'"%>,<%="'"+paisC[4]+"'"%>,<%=cantP[0]%>,<%=cantP[1]%>,<%=cantP[2]%>,<%=cantP[3]%>,<%=cantP[4]%>,<%=cantOtrosPaises%>);">
         <!--Navbar-->
         <jsp:include page="/includes/navbar.jsp">
             <jsp:param name="page" value="participantes"/>
@@ -89,10 +104,11 @@
                                 <div class="col-sm-4">
                                     <h2>Lista de Participantes</h2>
                                 </div>
-                                <div class="col-sm-8 justify-content-end">
-                                    <a role="button" class="btn btn-primary pe-2"
+                                <div class="col-sm-8 text-end" style="margin-top: -8px">
+                                    <a role="button" class="text-warning"
                                        href="<%=request.getContextPath()%>/participantes?action=crear">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="bi bi-person-plus-fill"
+                                           style="font-size: 30px;"></i>
                                     </a>
                                 </div>
                             </div>
@@ -104,7 +120,7 @@
                                         <span>Mostrar</span>
                                         <label>
                                             <form method='get'
-                                                  action='<%=request.getContextPath()%>/participantes?action=listar'>
+                                                  action='<%=request.getContextPath()%>/participantes?action=listar&columna=<%=columna%>&orden=<%=orden%>'>
                                                 <select class="form-control" name="limit"
                                                         onchange='this.form.submit();'>
                                                     <option value="5" <%=limit == 5 ? "selected" : ""%>>5</option>
@@ -115,13 +131,6 @@
                                             </form>
                                         </label>
                                         <span>participantes</span>
-                                        <%--                                        <form method='post' action='' id='myform'>--%>
-                                        <%--                                            <select name='sortby' onchange='submitForm();'>--%>
-                                        <%--                                                <option value="">Featured</option>--%>
-                                        <%--                                                <option value="asc">Price: Low to High</option>--%>
-                                        <%--                                                <option value="desc">Price: High to Low</option>--%>
-                                        <%--                                            </select>--%>
-                                        <%--                                        </form>--%>
                                     </div>
                                 </div>
                                 <div class="col-sm-9">
@@ -143,7 +152,7 @@
                                 <tr class="text-center" id="cabecera-container">
                                     <th class="col-2">
                                         <%
-                                            String hrefN = request.getContextPath() + "/participantes?columna=p.nombre&orden=asc&p";
+                                            String hrefN = request.getContextPath() + "/participantes?columna=p.nombre&orden=asc&limit=" + limit;
                                             String classN = "fa-minus-circle";
                                             if (columna.equals("p.nombre")) {
                                                 classN = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
@@ -157,7 +166,7 @@
                                     </th>
                                     <th class="col-3">
                                         <%
-                                            String hrefA = request.getContextPath() + "/participantes?columna=p.apellido&orden=asc";
+                                            String hrefA = request.getContextPath() + "/participantes?columna=p.apellido&orden=asc&limit=" + limit;
                                             String classA = "fa-minus-circle";
                                             if (columna.equals("p.apellido")) {
                                                 classA = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
@@ -172,7 +181,7 @@
                                     </th>
                                     <th class="col-1">
                                         <%
-                                            String hrefE = request.getContextPath() + "/participantes?columna=p.edad&orden=asc";
+                                            String hrefE = request.getContextPath() + "/participantes?columna=p.edad&orden=asc&limit=" + limit;
                                             String classE = "fa-minus-circle";
                                             if (columna.equals("p.edad")) {
                                                 classE = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
@@ -187,7 +196,7 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&orden=asc";
+                                            String hrefNa = request.getContextPath() + "/participantes?columna=p2.nombre&orden=asc&limit=" + limit;
                                             String classNa = "fa-minus-circle";
                                             if (columna.equals("p2.nombre")) {
                                                 classNa = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
@@ -202,7 +211,7 @@
                                     </th>
                                     <th class="col-2">
                                         <%
-                                            String hrefG = request.getContextPath() + "/participantes?columna=p.genero&orden=asc";
+                                            String hrefG = request.getContextPath() + "/participantes?columna=p.genero&orden=asc&limit=" + limit;
                                             String classG = "fa-minus-circle";
                                             if (columna.equals("p.genero")) {
                                                 classG = "fa-chevron-circle" + (orden.equals("asc") ? "-up" : "-down");
@@ -244,7 +253,7 @@
                                     </td>
                                     <td>
                                         <a href="<%=request.getContextPath()%>/participantes?action=eliminar&idParticipante=<%=participante.getIdParticipante()%>">
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -287,27 +296,28 @@
                         <!--Estadísticas-->
                         <div class="row justify-content-around">
                             <!--Género-->
-                            <div class="card shadow mb-4 col-xl-3 px-0">
-                                <!--Card Header-->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold">Porcentajes de Género</h6>
-                                </div>
-                                <!--Card Body-->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-2">
-                                        <canvas id="myChart"></canvas>
+                            <div class="col-xl-4 px-0">
+                                <div class="row">
+                                    <div class="card shadow mb-3 px-0">
+                                        <!--Card Header-->
+                                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                            <h6 class="m-0 font-weight-bold">Porcentajes de Género</h6>
+                                        </div>
+                                        <!--Card Body-->
+                                        <div class="card-body d-flex justify-content-center align-items-center">
+                                            <div class="chart-pie">
+                                                <canvas id="myChart"></canvas>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--Cards-->
-                            <div class="col-xl-3 col-md-6">
-                                <div class="d-flex flex-column justify-content-between h-100">
+                                <div class="row">
                                     <!--Edad promedio-->
-                                    <div class="card border-left-warning shadow py-2 my-auto">
+                                    <div class="card border-left-card shadow py-2 mb-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning mb-1">
+                                                    <div class="fs-6 font-weight-bold text-warning mb-1">
                                                         Edad promedio
                                                     </div>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -315,17 +325,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="fas fa-user fa-2x"></i>
+                                                    <i class="fas fa-user fa-2x text-gray-300"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <!--País con más participantes-->
-                                    <div class="card border-left-warning shadow py-2 my-auto">
+                                    <div class="card border-left-card shadow py-2 my-auto">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning mb-1">
+                                                    <div class="fs-6 font-weight-bold text-warning mb-1">
                                                         País con más participantes
                                                     </div>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -333,34 +345,64 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="fas fa-globe-americas fa-2x"></i>
+                                                    <i class="fas fa-globe-americas fa-2x text-gray-300"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!--Cards-->
+                            <%--                            <div class="col-xl-12 col-md-12">--%>
+                            <%--                                <div class="d-flex flex-column justify-content-between h-100">--%>
+                            <%--                                    <!--Edad promedio-->--%>
+                            <%--                                    <div class="card border-left-card shadow py-2 my-auto">--%>
+                            <%--                                        <div class="card-body">--%>
+                            <%--                                            <div class="row no-gutters align-items-center">--%>
+                            <%--                                                <div class="col mr-2">--%>
+                            <%--                                                    <div class="fs-6 font-weight-bold text-warning mb-1">--%>
+                            <%--                                                        Edad promedio--%>
+                            <%--                                                    </div>--%>
+                            <%--                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">--%>
+                            <%--                                                        <%=edadPromedio%>--%>
+                            <%--                                                    </div>--%>
+                            <%--                                                </div>--%>
+                            <%--                                                <div class="col-auto">--%>
+                            <%--                                                    <i class="fas fa-user fa-2x text-gray-300"></i>--%>
+                            <%--                                                </div>--%>
+                            <%--                                            </div>--%>
+                            <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                            <%--                                    <!--País con más participantes-->--%>
+                            <%--                                    <div class="card border-left-card shadow py-2 my-auto">--%>
+                            <%--                                        <div class="card-body">--%>
+                            <%--                                            <div class="row no-gutters align-items-center">--%>
+                            <%--                                                <div class="col mr-2">--%>
+                            <%--                                                    <div class="fs-6 font-weight-bold text-warning mb-1">--%>
+                            <%--                                                        País con más participantes--%>
+                            <%--                                                    </div>--%>
+                            <%--                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">--%>
+                            <%--                                                        <%=paisMasParticipantes%>--%>
+                            <%--                                                    </div>--%>
+                            <%--                                                </div>--%>
+                            <%--                                                <div class="col-auto">--%>
+                            <%--                                                    <i class="fas fa-globe-americas fa-2x text-gray-300"></i>--%>
+                            <%--                                                </div>--%>
+                            <%--                                            </div>--%>
+                            <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                            <%--                                </div>--%>
+                            <%--                            </div>--%>
                             <!--Participantes por país-->
-                            <div class="card shadow mb-4 col-xl-6 px-0">
+                            <div class="card shadow mb-4 col-xl-7 px-0">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Participantes por país</h6>
+                                    <h6 class="m-0 font-weight-bold">Participantes por país</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myChartPais"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-									<span class="mr-2">
-										<i class="fas fa-circle"></i> Masculino
-									</span>
-                                        <span class="mr-2">
-										<i class="fas fa-circle"></i> Femenino
-									</span>
-                                        <span class="mr-2">
-										<i class="fas fa-circle"></i> Otros
-									</span>
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +411,6 @@
                 </div>
             </div>
         </section>
-
 
         <!--JS-->
         <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
@@ -380,6 +421,5 @@
                 integrity="sha512-U3hGSfg6tQWADDQL2TUZwdVSVDxUt2HZ6IMEIskuBizSDzoe65K3ZwEybo0JOcEjZWtWY3OJzouhmlGop+/dBg=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="<%=request.getContextPath()%>/res/js/estadisticasParticipante.js"></script>
-        <script src="<%=request.getContextPath()%>/res/js/orderTable.js"></script>
     </body>
 </html>

@@ -211,5 +211,53 @@ public class ParticipanteDao extends BaseDao {
         return "";
     }
 
+    public HashMap<String, Integer> paisCantidadParticipantes() {
+
+        HashMap<String, Integer> lista = new HashMap<>();
+
+        String sql = "select pp.nombre, count(p.idParticipante)\n" +
+                "from participante p\n" +
+                "inner join pais pp on (p.idPais = pp.idPais)\n" +
+                "group by p.idPais\n" +
+                "order by count(p.idParticipante) desc\n" +
+                "limit 5;";
+
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                lista.put(rs.getString(1),rs.getInt(2));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    public int sumaParticipantesOtrosPaises() {
+        String sql = "select count(idParticipante) - (select sum(`participantes`) from (select count(idParticipante) as `participantes` \n" +
+                "from participante\n" +
+                "group by idPais\n" +
+                "order by `participantes` desc\n" +
+                "limit 5) tabla) \n" +
+                "from participante;";
+
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            rs.next();
+            return rs.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 
 }

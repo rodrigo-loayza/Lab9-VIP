@@ -440,3 +440,15 @@ table.table .avatar {
     margin-top: 10px;
     font-size: 13px;
 }
+
+.border-left-card {
+    border-left: .25rem solid #ffc800 !important;
+}
+
+.text-gray-800 {
+    color: #5a5c69 !important
+}
+
+.text-gray-300 {
+    color: #dddfeb !important;
+}

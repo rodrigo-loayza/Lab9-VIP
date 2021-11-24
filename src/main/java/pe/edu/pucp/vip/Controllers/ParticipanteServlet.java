@@ -40,9 +40,11 @@ public class ParticipanteServlet extends HttpServlet {
                 request.setAttribute("resultado", resultado);
 
                 //Estadisticas
-                request.setAttribute("listaPorcentajesGenero", participanteDao.porcentajeGenero());
+                request.setAttribute("pctGenero", participanteDao.porcentajeGenero());
                 request.setAttribute("paisMasParticipantes", participanteDao.paisMasParticipantes());
                 request.setAttribute("edadPromedio", participanteDao.edadPromedio());
+                request.setAttribute("cantPais", participanteDao.paisCantidadParticipantes());
+                request.setAttribute("cantOtrosPaises", participanteDao.sumaParticipantesOtrosPaises());
 
                 //Vista
                 view = request.getRequestDispatcher("/participante/participantes.jsp");
