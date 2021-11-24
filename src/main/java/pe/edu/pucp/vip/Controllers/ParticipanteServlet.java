@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ParticipanteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setCharacterEncoding("UTF-8");
         ParticipanteDao participanteDao = new ParticipanteDao();
         PaisDao paisDao = new PaisDao();
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
@@ -102,6 +102,7 @@ public class ParticipanteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
         ParticipanteDao participanteDao = new ParticipanteDao();
         PaisDao paisDao = new PaisDao();
         String action = request.getParameter("action");
