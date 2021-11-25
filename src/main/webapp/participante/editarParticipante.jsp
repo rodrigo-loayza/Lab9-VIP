@@ -34,7 +34,7 @@
             <div class="container d-flex justify-content-center">
                 <div class="card text-white bg-dark mb-3 border-0 responsive-form">
                     <div class="card-header">
-                        <h4 class="my-2">Editar</h4>
+                        <h4 class="my-2">Editar Participante</h4>
                     </div>
                     <div class="card-body">
                         <div class="container w-75">
@@ -44,26 +44,30 @@
                                     <input name="idParticipante" value="<%=participante.getIdParticipante()%>" hidden>
                                     <div class="mb-3">
                                         <!--El pattern ayudará a validar que no se ingrese numeros en los nombres-->
+                                        <label >Nombre</label>
                                         <input class="form-control mb-3" type="text" name="nombre"
-                                               placeholder="Nombre" maxlength="45" value="<%=participante.getNombre()%>"
+                                               placeholder="" maxlength="45" value="<%=participante.getNombre()%>"
                                                pattern="[A-zÀ-ž\s]+"
                                                required>
                                     </div>
                                     <div class="mb-3">
+                                        <label >Apellido</label>
                                         <input class="form-control mb-3" type="text" name="apellido"
-                                               placeholder="Apellido" value="<%=participante.getApellido()%>"
+                                               placeholde value="<%=participante.getApellido()%>"
                                                pattern="[A-zÀ-ž\s]+"
                                                maxlength="45" required>
                                     </div>
                                     <div class="row mb-3">
                                         <!--El min hará que no se acepten numeros menores a 18-->
                                         <div class="col-md-6">
+                                            <label >Edad</label>
                                             <input class="form-control" type="number" name="edad"
-                                                   placeholder="Edad" value="<%=participante.getEdad()%>"
+                                                   placeholder="" value="<%=participante.getEdad()%>"
                                                    min="18" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label>
+                                                <label >Género</label>
                                                 <select class="form-select" name="genero" required>
                                                     <option value="hombre" <%=participante.getGenero().equals("hombre") ? "selected" : ""%>>
                                                         Masculino
@@ -80,6 +84,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label>
+                                            <label >País</label>
                                             <select class="form-select" name="pais" required>
                                                 <% for (BPais pais : listaPaises) { %>
                                                 <option value="<%=pais.getIdPais()%>"><%=pais.getNombre()%>
@@ -91,11 +96,11 @@
                                     <div class="mb-3">
                                         <button class="btn btn-primary btn-lg" type="submit"
                                                 style="width: 100%; background-color: goldenrod;">
-                                            <strong>Registrarse</strong>
+                                            <strong>Guardar cambios</strong>
                                         </button>
                                     </div>
                                 </form>
-                                <a class="text-center" href="<%=request.getContextPath()%>/participantes">Volver</a>
+                                <a class="text-center" href="<%=request.getContextPath()%>/participantes">Salir del formulario</a>
                             </div>
                         </div>
                     </div>

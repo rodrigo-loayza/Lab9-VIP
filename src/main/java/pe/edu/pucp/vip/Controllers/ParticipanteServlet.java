@@ -11,6 +11,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 @WebServlet(name = "ParticipanteServlet", value = "/participantes")
 public class ParticipanteServlet extends HttpServlet {
@@ -38,7 +39,7 @@ public class ParticipanteServlet extends HttpServlet {
                 String orden = request.getParameter("orden") == null ? "asc" : request.getParameter("orden");
                 request.setAttribute("orden", orden);
 
-                ArrayList<BParticipante> listaPar = participanteDao.listarParticipantes(-1, busqueda, columna, orden);
+                ArrayList<BParticipante> listaPar = participanteDao.listarParticipantes(-1, busqueda.toLowerCase(Locale.ROOT), columna, orden);
                 ArrayList<BParticipante> listaParticipantes = new ArrayList<>();
                 int total = listaPar.size();
                 int paginas = 0;

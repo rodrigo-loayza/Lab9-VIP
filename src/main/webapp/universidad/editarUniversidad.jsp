@@ -42,18 +42,21 @@
                         <form method="post"
                               action="<%=request.getContextPath()%>/universidades?action=editarUniversidad&idUniversidad=<%=universidad.getIdUniversidad()%>">
                             <div class="mb-3">
+                                <label>Nombre</label>
                                 <input class="form-control"
-                                       type="text" name="nombre" placeholder="Nombre de la universidad"
+                                       type="text" name="nombre" placeholder="" pattern="[A-zÀ-ž\s]+"
                                        value="<%=universidad.getNombre()%>" maxlength="45" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-5 mb-3">
+                                    <label>Ranking</label>
                                     <input class="form-control"
                                            min="1" step="1"
-                                           type="number" name="ranking" placeholder="Ranking"
+                                           type="number" name="ranking" placeholder=""
                                            value="<%=universidad.getRanking()%>"  maxlength="5" required>
                                 </div>
                                 <div class="col-md-7 mb-3">
+                                    <label>País</label>
                                     <select class="form-select" name="idPais" id="idPais" required>
                                         <option value="" disabled >Seleccione el país</option>
                                         <%for (BPais pais : listaPaises) {%>
@@ -66,21 +69,22 @@
                                 </div>
                             </div>
                             <div class="mb-3">
+                                <label>Enlace de la foto</label>
                                 <input class="form-control"
-                                       type="text" name="urlFoto" placeholder="URL de la Foto"
+                                       type="text" name="urlFoto" placeholder=""
                                        value="<%=universidad.getUrlFoto()%>" maxlength="300" required>
                             </div>
                             <div class="mb-3">
                                 <button class=" btn btn-primary btn-lg" type="submit"
                                         style="width: 100%; background-color: goldenrod;">
-                                    <strong>Editar</strong>
+                                    <strong>Guardar cambios</strong>
                                 </button>
                             </div>
 
                             <br>
 
                         </form>
-                        <a class="text-center" href="<%=request.getContextPath()%>/universidades">Volver</a>
+                        <a class="text-center" href="<%=request.getContextPath()%>/universidades">Salir del formulario</a>
                     </div>
                 </div>
             </div>

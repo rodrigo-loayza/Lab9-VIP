@@ -47,7 +47,7 @@
             <div class="container d-flex justify-content-center">
                 <div class="card text-white bg-dark mb-3 border-0 responsive-form">
                     <div class="card-header">
-                        <h4 class="my-2">Editando <%=pais.getNombre()%></h4>
+                        <h4 class="my-2">Editar País</h4>
                     </div>
                     <div class="card-body">
                         <div class="container w-75">
@@ -58,8 +58,8 @@
                                         <div class="col-md-12">
                                             <input hidden value="<%=pais.getIdPais()%>" name="idpais" id="idpais">
                                             <label>Nombre</label>
-                                            <input class="form-control mb-3" type="text" name="nombre"
-                                                   placeholder="Nombre" maxlength="70"
+                                            <input class="form-control mb-3" type="text" name="nombre" placeholder="Nombre" pattern="[A-zÀ-ž\s]+"
+                                                   placeholder="" maxlength="70"
                                                    required value="<%=pais.getNombre()%>">
                                         </div>
                                         <h1></h1>
@@ -92,13 +92,13 @@
                                     <label>Poblacion</label>
                                     <div class="mb-3">
                                         <input class="form-control"
-                                               type="number" name="poblacion" placeholder="Poblacion"
+                                               type="number" name="poblacion" placeholder="Cantidad de personas" max="9999999.99"
                                                maxlength="70" min="0" value="<%=pais.getPoblacion()%>" required>
                                     </div>
                                     <label>Tamaño</label>
                                     <div class="mb-3">
                                         <input class="form-control"
-                                               type="number" step="0.01" name="tamano" placeholder="Millones km²" maxlength="70"
+                                               type="number" step="0.01" name="tamano" placeholder="km²" maxlength="70" max="999999999"
                                                min="0" value="<%=pais.getTamano()%>" required>
                                     </div>
 

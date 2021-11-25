@@ -33,7 +33,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card text-white bg-dark mb-3 border-0 responsive-form">
             <div class="card-header">
-                <h4 class="my-2">Registrar Alumno</h4>
+                <h4 class="my-2">Editar Alumno</h4>
             </div>
             <div class="card-body">
                 <div class="container w-75">
@@ -41,6 +41,7 @@
                         <form method="post"
                               action="<%=request.getContextPath()%>/universidades?action=editarAlumno&idUniversidad=<%=idUniversidad%>&idParticipante=<%=idParticipante%>">
                             <div class="mb-3">
+                                <label>Participante</label>
                                 <select class="form-select" name="idParticipante" id="idParticipante" disabled="disabled">
                                     <%String nombreApellido=alumno.getNombre()+" "+alumno.getApellido();%>
                                     <option value="<%=alumno.getIdParticipante()%>" selected>
@@ -50,29 +51,31 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label>Código</label>
                                     <input class="form-control"
-                                           value="<%=alumno.getCodigo()%>" type="text" name="codigo" placeholder="Código"
+                                           value="<%=alumno.getCodigo()%>" type="text" name="codigo" placeholder=""
                                            maxlength="15" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
+                                    <label>Promedio</label>
                                     <input class="form-control"
                                            min="0.00" step="0.01"
                                            max="20.00"
-                                           value="<%=alumno.getPromedio()%>" type="number" name="promedio" placeholder="Promedio"
+                                           value="<%=alumno.getPromedio()%>" type="number" name="promedio" placeholder=""
                                            required>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <button class=" btn btn-primary btn-lg" type="submit"
                                         style="width: 100%; background-color: goldenrod;">
-                                    <strong>Editar</strong>
+                                    <strong>Guardar cambios</strong>
                                 </button>
                             </div>
 
                             <br>
 
                         </form>
-                        <a class="text-center" href="<%=request.getContextPath()%>/universidades?action=listarAlumnos&idUniversidad=<%=idUniversidad%>">Volver</a>
+                        <a class="text-center" href="<%=request.getContextPath()%>/universidades?action=listarAlumnos&idUniversidad=<%=idUniversidad%>">Salir del formulario</a>
                     </div>
                 </div>
             </div>

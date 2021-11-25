@@ -41,8 +41,9 @@
                         <form method="post"
                               action="<%=request.getContextPath()%>/universidades?action=registrarAlumno&idUniversidad=<%=idUniversidad%>">
                             <div class="mb-3">
+                                <label>Nombre del Participante</label>
                                 <select class="form-select" name="idParticipante" id="idParticipante" required>
-                                    <option value="" disabled selected>Seleccione un participante</option>
+                                    <option value="" disabled selected>Sin Seleccionar</option>
                                     <%
                                     for (BParticipante participante : listaParticipantes) {
                                         String nombreApellido = participante.getNombre() + " "+participante.getApellido();
@@ -58,10 +59,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label>Código</label>
                                     <input class="form-control"
                                            type="text" name="codigo" placeholder="Código"
                                            maxlength="15" required>
                                 </div>
+                                <label>Promedio</label>
                                 <div class="col-md-6 mb-3">
                                     <input class="form-control"
                                            min="0.00" step="0.01"
@@ -73,14 +76,14 @@
                             <div class="mb-3">
                                 <button class=" btn btn-primary btn-lg" type="submit"
                                         style="width: 100%; background-color: goldenrod;">
-                                    <strong>Registrar</strong>
+                                    <strong>Guardar cambios</strong>
                                 </button>
                             </div>
 
                             <br>
 
                         </form>
-                        <a class="text-center" href="<%=request.getContextPath()%>/universidades?action=listarAlumnos&idUniversidad=<%=idUniversidad%>">Volver</a>
+                        <a class="text-center" href="<%=request.getContextPath()%>/universidades?action=listarAlumnos&idUniversidad=<%=idUniversidad%>">Salir del formulario</a>
                     </div>
                 </div>
             </div>

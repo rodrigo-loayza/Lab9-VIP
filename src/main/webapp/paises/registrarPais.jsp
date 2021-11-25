@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label>Nombre</label>
-                                            <input class="form-control mb-3" type="text" name="nombre"
+                                            <input class="form-control mb-3" type="text" name="nombre" placeholder="" pattern="[A-zÀ-ž\s]+"
                                                    maxlength="70"
                                                    required>
                                         </div>
@@ -91,13 +91,13 @@
                                     <label>Poblacion</label>
                                     <div class="mb-3">
                                         <input class="form-control"
-                                               type="number" name="poblacion"
+                                               type="number" name="poblacion" placeholder="Cantidad de personas" max="9999999.99"
                                                maxlength="70" min="0" required>
                                     </div>
                                     <label>Tamaño</label>
                                     <div class="mb-3">
                                         <input class="form-control"
-                                               type="number" step="0.01" name="tamano" placeholder="Millones km²" maxlength="70"
+                                               type="number" step="0.01" name="tamano" placeholder="km²" maxlength="70" max="999999999"
                                                min="0" required>
                                     </div>
 
