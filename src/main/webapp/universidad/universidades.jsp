@@ -33,7 +33,7 @@
               integrity="sha512-UwbBNAFoECXUPeDhlKR3zzWU3j8ddKIQQsDOsKhXQGdiB5i3IHEXr9kXx82+gaHigbNKbTDp3VY/G6gZqva6ZQ=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
-    <body>
+    <body class="general-bg">
         <!--Navbar-->
         <jsp:include page="/includes/navbar.jsp">
             <jsp:param name="page" value="universidades"/>
@@ -43,7 +43,7 @@
 
         <!--Contenido-->
 
-        <section class="py-3 general-bg">
+        <section class="py-3">
             <div class="container">
 
                 <!--Alerta de errores-->
@@ -240,7 +240,7 @@
                                             class="img-fluid " alt="<%=universidad.getNombre()%>" style="max-height: 120px; background-color: #fff;border-radius: 0.25rem">
                                     </td>
                                     <td><%=universidad.getNombre()%></td>
-                                    <td><%=universidad.getPais().getNombre()%> <span class="flag-icon flag-icon-pe"></span></td>
+                                    <td><%=universidad.getPais().getNombre()%></td>
                                     <td><%=universidad.getNumAlumnos()%></td>
                                     <td><a href="<%=request.getContextPath()%>/universidades?action=editarUniversidad&idUniversidad=<%=universidad.getIdUniversidad()%>" style="color: black"><i class="fas fa-edit"></i></a></td>
                                     <td>

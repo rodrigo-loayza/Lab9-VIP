@@ -30,7 +30,7 @@
                 <div class="container">
                     <div class="masthead-subheading">Bienvenido a VIP</div>
                     <div class="masthead-heading text-uppercase">El mejor consorcio de universidades</div>
-                    <a class="btn btn-primary btn-xl text-uppercase" href="#services">Ver el registro</a>
+                    <a class="btn btn-primary btn-xl text-uppercase" href="<%=request.getContextPath()%>/participantes">Ver el registro</a>
                 </div>
             </header>
         </section>

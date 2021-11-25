@@ -4,7 +4,7 @@
 <jsp:useBean id="universidad" scope="request" type="pe.edu.pucp.vip.Bean.BUniversidad"/>
 <%String alerta = request.getParameter("alerta");%>
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="en" >
     <head>
         <meta charset="utf-8">
         <link rel="icon" href="<%=request.getContextPath()%>/res/css/estilos.css">
@@ -22,7 +22,7 @@
               integrity="sha512-UwbBNAFoECXUPeDhlKR3zzWU3j8ddKIQQsDOsKhXQGdiB5i3IHEXr9kXx82+gaHigbNKbTDp3VY/G6gZqva6ZQ=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
-    <body style="height: 100%">
+    <body class="general-bg">
     <jsp:include page="/includes/navbar.jsp">
         <jsp:param name="page" value="universidades"/>
     </jsp:include>
@@ -30,7 +30,7 @@
         <div class="card-header py-2 my-4"></div>
 
         <!--Contenido-->
-        <section class="py-3 general-bg h-100">
+        <section class="py-3 h-100">
             <div class="container">
 
                 <!--Alerta de errores-->

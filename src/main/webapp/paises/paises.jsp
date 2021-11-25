@@ -13,7 +13,7 @@
 <%String direccionBasePag = request.getContextPath() + "/paises?busqueda=" + busqueda + "&limit=" + limit + "&orden=" + orden + "&columna=" + columna;%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -32,7 +32,7 @@
               integrity="sha512-UwbBNAFoECXUPeDhlKR3zzWU3j8ddKIQQsDOsKhXQGdiB5i3IHEXr9kXx82+gaHigbNKbTDp3VY/G6gZqva6ZQ=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
-    <body>
+    <body class="general-bg">
         <!--Navbar-->
         <jsp:include page="/includes/navbar.jsp">
             <jsp:param name="page" value="paises"/>
@@ -42,7 +42,7 @@
         <div class="card-header py-2 my-4"></div>
 
         <!--Contenido-->
-        <section class="py-3 general-bg">
+        <section class="py-3 ">
             <div class="container">
                 <%
                     String tipoAlerta;
@@ -223,7 +223,7 @@
                                 <%for (BPais pais : listaPaises) {%>
 
                                 <tr class="text-center">
-                                    <td><span class="flag-icon flag-icon-pe"></span> <%=pais.getNombre()%>
+                                    <td><%=pais.getNombre()%>
                                     </td>
                                     <td><%=pais.getContinente().getNombre()%>
                                     </td>

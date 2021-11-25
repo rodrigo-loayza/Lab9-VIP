@@ -50,7 +50,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     </head>
     <%--pais(<%=listaPaisesCantidad.toString()%>,<%=listaCantidadPaises.toString()%>,<%=cantOtrosPaises%>);--%>
-    <body onload="start(<%=pctGenero.get("hombre")%>,<%=pctGenero.get("mujer")%>,<%=pctGenero.get("otros")%>,<%="'"+paisC[0]+"'"%>,<%="'"+paisC[1]+"'"%>,<%="'"+paisC[2]+"'"%>,<%="'"+paisC[3]+"'"%>,<%="'"+paisC[4]+"'"%>,<%=cantP[0]%>,<%=cantP[1]%>,<%=cantP[2]%>,<%=cantP[3]%>,<%=cantP[4]%>,<%=cantOtrosPaises%>);">
+    <body class="general-bg" onload="start(<%=pctGenero.get("hombre")%>,<%=pctGenero.get("mujer")%>,<%=pctGenero.get("otros")%>,<%="'"+paisC[0]+"'"%>,<%="'"+paisC[1]+"'"%>,<%="'"+paisC[2]+"'"%>,<%="'"+paisC[3]+"'"%>,<%="'"+paisC[4]+"'"%>,<%=cantP[0]%>,<%=cantP[1]%>,<%=cantP[2]%>,<%=cantP[3]%>,<%=cantP[4]%>,<%=cantOtrosPaises%>);">
         <!--Navbar-->
         <jsp:include page="/includes/navbar.jsp">
             <jsp:param name="page" value="participantes"/>
@@ -60,7 +60,7 @@
         <div class="card-header py-2 my-4"></div>
 
         <!--Contenido-->
-        <section class="py-3 general-bg">
+        <section class="py-3">
             <div class="container">
                 <%
                     String alertClass = "";
@@ -252,7 +252,6 @@
                                     <td><%=participante.getEdad()%>
                                     </td>
                                     <td><%=participante.getPais().getNombre()%>
-                                        <span class="flag-icon flag-icon-pe"></span>
                                     </td>
                                     <td><%=participante.getGenero().substring(0, 1).toUpperCase() + participante.getGenero().substring(1)%>
                                     </td>
