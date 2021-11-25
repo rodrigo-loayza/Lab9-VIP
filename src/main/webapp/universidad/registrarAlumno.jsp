@@ -64,8 +64,8 @@
                                            type="text" name="codigo" placeholder="Código"
                                            maxlength="15" required>
                                 </div>
-                                <label>Promedio</label>
                                 <div class="col-md-6 mb-3">
+                                    <label>Promedio</label>
                                     <input class="form-control"
                                            min="0.00" step="0.01"
                                            max="20.00"
