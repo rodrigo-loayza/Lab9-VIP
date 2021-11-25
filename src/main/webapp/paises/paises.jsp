@@ -42,41 +42,42 @@
         <div class="card-header py-2 my-4"></div>
 
         <!--Contenido-->
-        <section class="py-3">
-            <%
-                String tipoAlerta;
-                String texto;
-                if (E.equals("1")) {
-                    tipoAlerta = "success";
-                    if (mensaje.equals("1")) {
-                        texto = "Se ha borrado el país de forma exitosa";
-                    } else if (mensaje.equals("2")) {
-                        texto = "Se ha registrado al país de forma exitosa";
-                    } else {
-                        texto = "Los cambios han sido guardados";
-                    }
-                } else {
-                    tipoAlerta = "danger";
-                    if (mensaje.equals("1")) {
-                        texto = "Ha ocurrido un error al borrar el país, verifica que no tenga relación con algún participante o universidad antes de borrar";
-                    } else if (mensaje.equals("2")) {
-                        texto = "Ha ocurrido un error al registrar el país, verifique que todos los datos que ha ingresado sean válidos";
-                    } else {
-                        texto = "Ha ocurrido un error al editar la información del país, verifique que todos los datos que ha ingresado sean válidos";
-                    }
-                }
-
-                if (!mensaje.equals("0")) {
-            %>
-            <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
-                 style="margin: 30px auto 20px; width: 90%">
-                <%=texto%>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <%
-                }
-            %>
+        <section class="py-3 general-bg">
             <div class="container">
+                <%
+                    String tipoAlerta;
+                    String texto;
+                    if (E.equals("1")) {
+                        tipoAlerta = "success";
+                        if (mensaje.equals("1")) {
+                            texto = "Se ha borrado el país de forma exitosa";
+                        } else if (mensaje.equals("2")) {
+                            texto = "Se ha registrado al país de forma exitosa";
+                        } else {
+                            texto = "Los cambios han sido guardados";
+                        }
+                    } else {
+                        tipoAlerta = "danger";
+                        if (mensaje.equals("1")) {
+                            texto = "Ha ocurrido un error al borrar el país, verifica que no tenga relación con algún participante o universidad antes de borrar";
+                        } else if (mensaje.equals("2")) {
+                            texto = "Ha ocurrido un error al registrar el país, verifique que todos los datos que ha ingresado sean válidos";
+                        } else {
+                            texto = "Ha ocurrido un error al editar la información del país, verifique que todos los datos que ha ingresado sean válidos";
+                        }
+                    }
+
+                    if (!mensaje.equals("0")) {
+                %>
+                <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
+                     style="margin: 30px auto 0px;">
+                    <%=texto%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <%
+                    }
+                %>
+
                 <div class="table-responsive">
                     <div class="table-wrapper">
                         <div class="table-title ">

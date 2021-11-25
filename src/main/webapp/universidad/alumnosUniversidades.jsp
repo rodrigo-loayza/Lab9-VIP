@@ -4,9 +4,10 @@
 <jsp:useBean id="universidad" scope="request" type="pe.edu.pucp.vip.Bean.BUniversidad"/>
 <%String alerta = request.getParameter("alerta");%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
     <head>
         <meta charset="utf-8">
+        <link rel="icon" href="<%=request.getContextPath()%>/res/css/estilos.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>VIP - Alumnos PUCP</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -21,51 +22,52 @@
               integrity="sha512-UwbBNAFoECXUPeDhlKR3zzWU3j8ddKIQQsDOsKhXQGdiB5i3IHEXr9kXx82+gaHigbNKbTDp3VY/G6gZqva6ZQ=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
-    <body>
+    <body style="height: 100%">
     <jsp:include page="/includes/navbar.jsp">
         <jsp:param name="page" value="universidades"/>
     </jsp:include>
         <!--Espacio-->
         <div class="card-header py-2 my-4"></div>
 
-    <!--Alerta de errores-->
-    <%
-        if (alerta != null) {
-            String tipoAlerta = "warning";
-            String mensaje = "";
-            if (alerta.startsWith("error")) {
-                tipoAlerta = "danger";
-            }
-            if (alerta.startsWith("exito")) {
-                tipoAlerta = "success";
-            }
-            switch (alerta) {
-                case ("exito4"):
-                    mensaje = "Se ha registrado el alumno";
-                    break;
-                case ("exito5"):
-                    mensaje = "Se ha editado el alumno";
-                    break;
-                case ("exito6"):
-                    mensaje = "Se ha eliminado el alumno";
-                    break;
-                case ("exito7"):
-                    mensaje = "Se ha borrado el alumno";
-                    break;
-            }
-    %>
-    <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
-         style="margin: 52px auto 0px; width: 90%">
-        <%=mensaje%>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <%
-        }
-    %>
-
         <!--Contenido-->
-        <section class="py-3">
+        <section class="py-3 general-bg h-100">
             <div class="container">
+
+                <!--Alerta de errores-->
+                <%
+                    if (alerta != null) {
+                        String tipoAlerta = "warning";
+                        String mensaje = "";
+                        if (alerta.startsWith("error")) {
+                            tipoAlerta = "danger";
+                        }
+                        if (alerta.startsWith("exito")) {
+                            tipoAlerta = "success";
+                        }
+                        switch (alerta) {
+                            case ("exito4"):
+                                mensaje = "Se ha registrado el alumno";
+                                break;
+                            case ("exito5"):
+                                mensaje = "Se ha editado el alumno";
+                                break;
+                            case ("exito6"):
+                                mensaje = "Se ha eliminado el alumno";
+                                break;
+                            case ("exito7"):
+                                mensaje = "Se ha borrado el alumno";
+                                break;
+                        }
+                %>
+                <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
+                     style="margin: 30px auto 0px;">
+                    <%=mensaje%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <%
+                    }
+                %>
+
                 <div class="table-responsive">
                     <div class="table-wrapper">
                         <div class="table-title ">

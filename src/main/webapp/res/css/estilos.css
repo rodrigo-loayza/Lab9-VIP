@@ -34,6 +34,13 @@
     background-size: cover
 }
 
+.general-bg {
+    background-image: url("../img/general-bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover
+}
+
 .masthead {
     padding-top: 10.5rem;
     padding-bottom: 6rem;

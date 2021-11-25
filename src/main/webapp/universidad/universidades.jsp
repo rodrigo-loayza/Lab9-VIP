@@ -43,61 +43,62 @@
 
         <!--Contenido-->
 
-        <!--Alerta de errores-->
-        <%
-            if (alerta != null) {
-                String tipoAlerta = "warning";
-                String mensaje = "";
-                if (alerta.startsWith("error")) {
-                    tipoAlerta = "danger";
-                }
-                if (alerta.startsWith("exito")) {
-                    tipoAlerta = "success";
-                }
-                switch (alerta) {
-                    case ("error1"):
-                        mensaje = "Hubo un error al registrar la universidad";
-                        break;
-                    case ("error2"):
-                        mensaje = "Hubo un error al editar la universidad";
-                        break;
-                    case ("error3"):
-                        mensaje = "Hubo un error al eliminar la universidad";
-                        break;
-                    case ("error4"):
-                        mensaje = "Hubo un error al registrar el alumno";
-                        break;
-                    case ("error5"):
-                        mensaje = "Hubo un error al editar el alumno";
-                        break;
-                    case ("error6"):
-                        mensaje = "Hubo un error al eliminar el alumno";
-                        break;
-                    case ("error7"):
-                        mensaje = "Hubo un error al borrar el alumno";
-                        break;
-                    case ("exito1"):
-                        mensaje = "Se ha registrado la universidad";
-                        break;
-                    case ("exito2"):
-                        mensaje = "Se ha editado la universidad";
-                        break;
-                    case ("exito3"):
-                        mensaje = "Se ha eliminado la universidad";
-                        break;
-                }
-        %>
-        <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
-             style="margin: 52px auto 0px; width: 90%">
-            <%=mensaje%>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <%
-            }
-        %>
-
-        <section class="py-3">
+        <section class="py-3 general-bg">
             <div class="container">
+
+                <!--Alerta de errores-->
+                <%
+                    if (alerta != null) {
+                        String tipoAlerta = "warning";
+                        String mensaje = "";
+                        if (alerta.startsWith("error")) {
+                            tipoAlerta = "danger";
+                        }
+                        if (alerta.startsWith("exito")) {
+                            tipoAlerta = "success";
+                        }
+                        switch (alerta) {
+                            case ("error1"):
+                                mensaje = "Hubo un error al registrar la universidad";
+                                break;
+                            case ("error2"):
+                                mensaje = "Hubo un error al editar la universidad";
+                                break;
+                            case ("error3"):
+                                mensaje = "Hubo un error al eliminar la universidad";
+                                break;
+                            case ("error4"):
+                                mensaje = "Hubo un error al registrar el alumno";
+                                break;
+                            case ("error5"):
+                                mensaje = "Hubo un error al editar el alumno";
+                                break;
+                            case ("error6"):
+                                mensaje = "Hubo un error al eliminar el alumno";
+                                break;
+                            case ("error7"):
+                                mensaje = "Hubo un error al borrar el alumno";
+                                break;
+                            case ("exito1"):
+                                mensaje = "Se ha registrado la universidad";
+                                break;
+                            case ("exito2"):
+                                mensaje = "Se ha editado la universidad";
+                                break;
+                            case ("exito3"):
+                                mensaje = "Se ha eliminado la universidad";
+                                break;
+                        }
+                %>
+                <div class="alert alert-<%=tipoAlerta%> alert-dismissible fade show" role="alert"
+                     style="margin: 30px auto 0px;">
+                    <%=mensaje%>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <%
+                    }
+                %>
+
                 <div class="table-responsive">
                     <div class="table-wrapper">
                         <div class="table-title ">

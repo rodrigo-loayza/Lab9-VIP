@@ -4,7 +4,7 @@
     <div class="container">
         <!--Logo-->
         <a href="<%=request.getContextPath()%>/" class="navbar-brand">
-            <span class="text-uppercase font-weight-bold">VIP</span>
+            <img src="<%=request.getContextPath()%>/res/img/vip.png" alt="VIP" style="max-width: 160px">
         </a>
         <!--Boton de pantallas pequeñas-->
         <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

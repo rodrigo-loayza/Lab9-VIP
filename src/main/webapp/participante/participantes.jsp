@@ -60,7 +60,7 @@
         <div class="card-header py-2 my-4"></div>
 
         <!--Contenido-->
-        <section class="py-3">
+        <section class="py-3 general-bg">
             <div class="container">
                 <%
                     String alertClass = "";
@@ -93,7 +93,8 @@
                                 break;
                         }
                 %>
-                <div class="alert <%=alertClass%> alert-dismissible fade show" role="alert">
+                <div class="alert <%=alertClass%> alert-dismissible fade show" role="alert"
+                     style="margin: 30px auto 0px;">
                     <%=alertMssg%>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
